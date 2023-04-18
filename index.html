@@ -25,7 +25,7 @@
     <main>
         <div class="hero-buttons-block">
             <div class="mobile-menu">
-                <button class="btn mobile-btn">
+                <button class="btn mobile-btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'MobMenu' });">
                     <svg class="open" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.66667 10V11.3333H1.33333V10H8.66667ZM12 5.33334V6.66667H0V5.33334H12ZM10.6667 0.666672V2.00001H3.33333V0.666672H10.6667Z" fill="#FCFCFC" />
                     </svg>
@@ -36,21 +36,21 @@
 
                 </button>
                 <div class="hero-buttons-wrapper">
-                    <button class="btn">Переиздания</button>
-                    <button class="btn">Актуальное</button>
-                    <button class="btn">Архив</button>
+                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'RemastersWrap' });">Переиздания</button>
+                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'CurrentWrap' });">Актуальное</button>
+                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'ArchiveWrap' });">Архив</button>
                 </div>
             </div>
             <div class="hero-buttons">
                 <div class="hero-buttons-wrapper mob-none">
-                    <button class="btn">Переиздания</button>
-                    <button class="btn">Актуальное</button>
-                    <button class="btn">Архив</button>
+                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'Remasters' });">Переиздания</button>
+                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'Current' });">Актуальное</button>
+                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'Archive' });">Архив</button>
                 </div>
                 <div>
                     <div class="voice-assistant-item topical-player" data-audio="mus/kongress.mp3">
                         <div class="voice-assistant-item-button">
-                            <button class="play-button"></button>
+                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'New' });"></button>
                         </div>
                         <span>Свежее</span>
 
@@ -62,7 +62,7 @@
                                     <div class="audio-controls-bar-current"></div>
                                 </div>
                                 <div class="voice-assistant-item-text-wrap">
-                                    <button class="flex-center tab-item">
+                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'New' });">
                                         <div class="list-decor"></div>
                                         <p class="text-3 gray text-show">смотреть текст</p>
                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -115,7 +115,7 @@
 
                     <!--            <div class="topical-player" data-audio="mus/kongress.mp3">-->
                     <!--                <div class="voice-assistant-item-button">-->
-                    <!--                    <button class="play-button">-->
+                    <!--                    <button class="play-button" >-->
                     <!--                        <span>Свежее</span>-->
                     <!--                    </button>-->
                     <!--                </div>-->
@@ -186,7 +186,7 @@
                                 <div class="single-info-wrapper-item">
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/kongress.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'SinKongress' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -197,7 +197,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'SinKongress' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -264,7 +264,7 @@
                                 <div class="single-info-wrapper-item">
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/antirom.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'SinAntirom' });"></button>
                                             </a>
                                         </div>
                                         <div class="voice-assistant-item-text">
@@ -275,7 +275,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'SinAntirom' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -337,7 +337,7 @@
                                 <div class="single-info-wrapper-item">
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/rossiya.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'SinRossi' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -348,7 +348,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'SinRossi' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -600,7 +600,7 @@
                                 <div class="playlist-items">
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/neboysya/01_kongress.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'NeboyKongr' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -611,7 +611,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'NeboyKongr' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -661,7 +661,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/neboysya/02_koncept.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'NeboyKoncept' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -672,7 +672,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'NeboyKoncept' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -731,7 +731,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/neboysya/03_koshke.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'NeboyKoshke' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -742,7 +742,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'NeboyKoshke' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -799,7 +799,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/neboysya/04_ezhik.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'NeboyEzhik' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -810,7 +810,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'NeboyEzhik' });">>
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -884,7 +884,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/neboysya/05_marsh.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'NeboyMarsh' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -895,7 +895,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'NeboyMarsh' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -977,7 +977,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/neboysya/06_Shpionoman.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'NeboyShpion' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -988,7 +988,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'NeboyShpion' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1038,7 +1038,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/neboysya/07_Vse budet.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'NeboyVsebudet' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1049,7 +1049,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'NeboyVsebudet' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1103,7 +1103,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/neboysya/08_gorod bolen.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'NeboyGorodB' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1114,7 +1114,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'NeboyGorodB' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1177,7 +1177,7 @@
                             </div>
                             <div class="playlist-list-bottom">
                                 <a href="https://open.spotify.com/album/0yZR2o0e5TOUqmcHj2Fw1Q">
-                                    <button class="btn">
+                                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'External', 'event_label': 'SpotifyNeboy' });">
                                         <span>Spotify</span>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M12.0105 2.01904C6.51553 2.01904 2.01953 6.51504 2.01953 12.01C2.01953 17.504 6.51553 22 12.0105 22C17.5045 22 22.0005 17.504 22.0005 12.01C22.0005 6.51504 17.5545 2.01904 12.0105 2.01904ZM16.6055 16.455C16.4065 16.754 16.0565 16.855 15.7555 16.656C13.4065 15.206 10.4595 14.906 6.96253 15.705C6.61453 15.807 6.31453 15.557 6.21453 15.256C6.11353 14.906 6.36353 14.608 6.66453 14.507C10.4595 13.657 13.7575 14.008 16.3545 15.607C16.7045 15.756 16.7545 16.155 16.6055 16.455ZM17.8055 13.708C17.5545 14.057 17.1055 14.207 16.7545 13.957C14.0575 12.311 9.96253 11.809 6.81553 12.809C6.41753 12.91 5.96553 12.709 5.86653 12.311C5.76553 11.909 5.96653 11.459 6.36553 11.359C10.0115 10.261 14.5085 10.811 17.6045 12.71C17.9045 12.859 18.0545 13.358 17.8055 13.708ZM17.9045 10.909C14.7075 9.01204 9.36253 8.81204 6.31453 9.76304C6.08274 9.82983 5.83412 9.80476 5.62033 9.69302C5.40655 9.58129 5.24402 9.39148 5.16653 9.16304C5.09855 8.93097 5.12293 8.6816 5.23457 8.46709C5.3462 8.25257 5.53645 8.08952 5.76553 8.01204C9.31253 6.96304 15.1575 7.16204 18.8545 9.36304C19.3035 9.61204 19.4535 10.212 19.2035 10.661C18.9535 11.011 18.3545 11.159 17.9045 10.909Z" fill="#FCFCFC" />
@@ -1185,7 +1185,7 @@
                                     </button>
                                 </a>
                                 <a href="https://music.yandex.ru/album/21186839">
-                                    <button class="btn">
+                                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'External', 'event_label': 'YandexNeboy' });">
                                         <span>Yandex Music</span>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M6.96351 4.72521C8.28172 3.74759 9.84828 3.15335 11.4722 3V5.70283C10.4214 5.83702 9.40888 6.23957 8.54918 6.89131C7.47933 7.69641 6.67695 8.82739 6.29486 10.1117C5.91277 11.396 5.93187 12.7762 6.39038 14.0414C6.84889 15.3065 7.68948 16.3992 8.79753 17.1467C9.90559 17.8943 11.2429 18.2586 12.5802 18.201C13.9175 18.1435 15.1975 17.6451 16.2483 16.8017C17.2799 15.9583 18.025 14.789 18.3497 13.4855C18.579 12.5845 18.5981 11.6261 18.4262 10.7251L20.6996 8.90406V8.88489C21.3109 10.5718 21.4065 12.412 20.967 14.1564C20.4894 16.0158 19.4387 17.6835 17.9486 18.8911C16.4584 20.0988 14.6244 20.808 12.7139 20.9039C10.8035 20.9997 8.91216 20.463 7.3265 19.3895C5.74083 18.3161 4.53725 16.7634 3.8877 14.9615C3.23815 13.1596 3.19994 11.1852 3.75397 9.34495C4.30799 7.50472 5.43516 5.87535 6.96351 4.72521Z" fill="#FCFCFC" />
@@ -1221,7 +1221,7 @@
                                 <div class="playlist-items">
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/eto/01_ohotniki.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'EtoOhotniki' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1232,7 +1232,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'EtoOhotniki' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1277,7 +1277,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/eto/02_golod.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'EtoGolod' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1288,7 +1288,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'EtoGolod' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1351,7 +1351,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/eto/03_eto.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'EtoEto' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1362,7 +1362,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'EtoEto' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1431,7 +1431,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/eto/04_vintik.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'EtoVintik' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1442,7 +1442,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'EtoVintik' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1488,7 +1488,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/eto/05_zmeja.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'EtoZmeja' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1499,7 +1499,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'EtoZmeja' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1540,7 +1540,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/eto/06_karina.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'EtoKarina' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1551,7 +1551,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'EtoKarina' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1599,7 +1599,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/eto/07_dengi.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'EtoDengi' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1610,7 +1610,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'EtoDengi' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1683,7 +1683,7 @@
                                     </div>
                                     <div class="voice-assistant-item w-clearfix" data-audio="mus/eto/08_moidrug.mp3">
                                         <div class="voice-assistant-item-button">
-                                            <button class="play-button"></button>
+                                            <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Listen', 'event_label': 'EtoDrug' });"></button>
                                         </div>
 
                                         <div class="voice-assistant-item-text">
@@ -1694,7 +1694,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'EtoDrug' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -1722,7 +1722,7 @@
                             </div>
                             <div class="playlist-list-bottom">
                                 <a href="https://open.spotify.com/album/3Lk6nzoY4cPXtdvNJwrNU5">
-                                    <button class="btn">
+                                    <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'External', 'event_label': 'SpotifyEto' });">
                                         <span>Spotify</span>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M12.0105 2.01904C6.51553 2.01904 2.01953 6.51504 2.01953 12.01C2.01953 17.504 6.51553 22 12.0105 22C17.5045 22 22.0005 17.504 22.0005 12.01C22.0005 6.51504 17.5545 2.01904 12.0105 2.01904ZM16.6055 16.455C16.4065 16.754 16.0565 16.855 15.7555 16.656C13.4065 15.206 10.4595 14.906 6.96253 15.705C6.61453 15.807 6.31453 15.557 6.21453 15.256C6.11353 14.906 6.36353 14.608 6.66453 14.507C10.4595 13.657 13.7575 14.008 16.3545 15.607C16.7045 15.756 16.7545 16.155 16.6055 16.455ZM17.8055 13.708C17.5545 14.057 17.1055 14.207 16.7545 13.957C14.0575 12.311 9.96253 11.809 6.81553 12.809C6.41753 12.91 5.96553 12.709 5.86653 12.311C5.76553 11.909 5.96653 11.459 6.36553 11.359C10.0115 10.261 14.5085 10.811 17.6045 12.71C17.9045 12.859 18.0545 13.358 17.8055 13.708ZM17.9045 10.909C14.7075 9.01204 9.36253 8.81204 6.31453 9.76304C6.08274 9.82983 5.83412 9.80476 5.62033 9.69302C5.40655 9.58129 5.24402 9.39148 5.16653 9.16304C5.09855 8.93097 5.12293 8.6816 5.23457 8.46709C5.3462 8.25257 5.53645 8.08952 5.76553 8.01204C9.31253 6.96304 15.1575 7.16204 18.8545 9.36304C19.3035 9.61204 19.4535 10.212 19.2035 10.661C18.9535 11.011 18.3545 11.159 17.9045 10.909Z" fill="#FCFCFC" />
@@ -1746,7 +1746,7 @@
         </section>
         <div class="main-player">
             <div class="player">
-                <div class="voice-assistant-item-button"> <button class="play-button"></button> </div>
+                <div class="voice-assistant-item-button"> <button class="play-button" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'Continue' });"></button> </div>
                 <div class="voice-assistant-item-text">
                     <div class="audio-controls">
                         <div class="audio-controls-bar">
@@ -1782,7 +1782,7 @@
                             <div class="bar"></div>
                             <div class="audio-controls-bar-current"></div>
                         </div>
-                        <div class="voice-assistant-item-text-wrap"> <button class="flex-center tab-item">
+                        <div class="voice-assistant-item-text-wrap"> <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'Continue' });">
                                 <div class="list-decor"></div>
                             </button>
                             <p class="audio-controls-time text-3">0:00</p>
@@ -1803,7 +1803,7 @@
                 </div>
                 <div class="footer-buttons">
                     <a href="https://open.spotify.com/artist/1CHvDyvTP45UHjjAPnpvCV">
-                        <button class="btn">
+                        <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'External', 'event_label': 'SpotifyFoo' });">
                             <span>Spotify</span>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.0105 2.01904C6.51553 2.01904 2.01953 6.51504 2.01953 12.01C2.01953 17.504 6.51553 22 12.0105 22C17.5045 22 22.0005 17.504 22.0005 12.01C22.0005 6.51504 17.5545 2.01904 12.0105 2.01904ZM16.6055 16.455C16.4065 16.754 16.0565 16.855 15.7555 16.656C13.4065 15.206 10.4595 14.906 6.96253 15.705C6.61453 15.807 6.31453 15.557 6.21453 15.256C6.11353 14.906 6.36353 14.608 6.66453 14.507C10.4595 13.657 13.7575 14.008 16.3545 15.607C16.7045 15.756 16.7545 16.155 16.6055 16.455ZM17.8055 13.708C17.5545 14.057 17.1055 14.207 16.7545 13.957C14.0575 12.311 9.96253 11.809 6.81553 12.809C6.41753 12.91 5.96553 12.709 5.86653 12.311C5.76553 11.909 5.96653 11.459 6.36553 11.359C10.0115 10.261 14.5085 10.811 17.6045 12.71C17.9045 12.859 18.0545 13.358 17.8055 13.708ZM17.9045 10.909C14.7075 9.01204 9.36253 8.81204 6.31453 9.76304C6.08274 9.82983 5.83412 9.80476 5.62033 9.69302C5.40655 9.58129 5.24402 9.39148 5.16653 9.16304C5.09855 8.93097 5.12293 8.6816 5.23457 8.46709C5.3462 8.25257 5.53645 8.08952 5.76553 8.01204C9.31253 6.96304 15.1575 7.16204 18.8545 9.36304C19.3035 9.61204 19.4535 10.212 19.2035 10.661C18.9535 11.011 18.3545 11.159 17.9045 10.909Z" fill="#FCFCFC" />
@@ -1811,7 +1811,7 @@
                         </button>
                     </a>
                     <a href="https://music.yandex.ru/artist/15977367/">
-                        <button class="btn">
+                        <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'External', 'event_label': 'YandexFoo' });">
                             <span>Yandex Music</span>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6.96351 4.72521C8.28172 3.74759 9.84828 3.15335 11.4722 3V5.70283C10.4214 5.83702 9.40888 6.23957 8.54918 6.89131C7.47933 7.69641 6.67695 8.82739 6.29486 10.1117C5.91277 11.396 5.93187 12.7762 6.39038 14.0414C6.84889 15.3065 7.68948 16.3992 8.79753 17.1467C9.90559 17.8943 11.2429 18.2586 12.5802 18.201C13.9175 18.1435 15.1975 17.6451 16.2483 16.8017C17.2799 15.9583 18.025 14.789 18.3497 13.4855C18.579 12.5845 18.5981 11.6261 18.4262 10.7251L20.6996 8.90406V8.88489C21.3109 10.5718 21.4065 12.412 20.967 14.1564C20.4894 16.0158 19.4387 17.6835 17.9486 18.8911C16.4584 20.0988 14.6244 20.808 12.7139 20.9039C10.8035 20.9997 8.91216 20.463 7.3265 19.3895C5.74083 18.3161 4.53725 16.7634 3.8877 14.9615C3.23815 13.1596 3.19994 11.1852 3.75397 9.34495C4.30799 7.50472 5.43516 5.87535 6.96351 4.72521Z" fill="#FCFCFC" />
@@ -1821,7 +1821,7 @@
                     </a>
 
                     <a href="https://www.youtube.com/@gruppanate">
-                        <button class="btn">
+                        <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'External', 'event_label': 'YoutubeFoo' });">
                             <span>YouTube</span>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.0716 3.7002H12.194C13.3244 3.70432 19.052 3.74558 20.5963 4.16088C21.0632 4.28763 21.4886 4.53469 21.8301 4.87736C22.1715 5.22004 22.4171 5.64633 22.5422 6.11364C22.6811 6.6362 22.7787 7.32792 22.8447 8.04164L22.8585 8.18466L22.8887 8.5422L22.8997 8.68522C22.9891 9.94214 23.0001 11.1193 23.0015 11.3764V11.4796C23.0001 11.7464 22.9877 13.0033 22.8887 14.3125L22.8777 14.4569L22.8654 14.5999C22.7966 15.3865 22.6948 16.1676 22.5422 16.7424C22.4175 17.2099 22.172 17.6364 21.8305 17.9791C21.489 18.3219 21.0634 18.5688 20.5963 18.6952C19.0011 19.1242 12.9379 19.1545 12.0977 19.1558H11.9024C11.4775 19.1558 9.72001 19.1476 7.87727 19.0843L7.64349 19.0761L7.52385 19.0706L7.2887 19.061L7.05354 19.0513C5.52709 18.9839 4.07353 18.8753 3.40381 18.6938C2.93693 18.5675 2.51141 18.3208 2.1699 17.9783C1.82839 17.6359 1.58287 17.2096 1.45793 16.7424C1.30529 16.169 1.20353 15.3865 1.13477 14.5999L1.12377 14.4555L1.11276 14.3125C1.0449 13.3806 1.00729 12.4469 1 11.5126L1 11.3434C1.00275 11.0478 1.01375 10.026 1.08801 8.89838L1.09764 8.75673L1.10176 8.68522L1.11276 8.5422L1.14302 8.18466L1.15677 8.04164C1.22278 7.32792 1.32042 6.63483 1.45931 6.11364C1.58403 5.64614 1.82946 5.21965 2.17098 4.87691C2.51251 4.53418 2.93814 4.28725 3.40519 4.16088C4.0749 3.98211 5.52847 3.87209 7.05492 3.80333L7.2887 3.79371L7.52523 3.78546L7.64349 3.78133L7.87865 3.7717C9.18742 3.72959 10.4967 3.70621 11.8062 3.70157H12.0716V3.7002ZM9.80115 8.11452V14.7401L15.5178 11.4287L9.80115 8.11452Z" fill="#FCFCFC" />
@@ -1829,7 +1829,7 @@
                         </button>
                     </a>
                     <a href="https://twitter.com/SZaderiy">
-                        <button class="btn">
+                        <button class="btn" onclick="gtag('event', 'click', { 'event_category': 'External', 'event_label': 'TwitterFoo' });">
                             <span>Twitter</span>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M22.1013 5.89239C21.3796 6.21218 20.6043 6.42826 19.7893 6.52592C20.6303 6.02272 21.2594 5.23075 21.5594 4.29777C20.7693 4.76707 19.9045 5.09741 19.0028 5.27442C18.3964 4.62695 17.5932 4.19779 16.7179 4.05358C15.8426 3.90937 14.9441 4.05818 14.1621 4.47689C13.38 4.89561 12.758 5.56082 12.3928 6.36923C12.0275 7.17764 11.9393 8.08403 12.142 8.94768C10.541 8.8673 8.97489 8.45119 7.54517 7.72635C6.11544 7.00151 4.85411 5.98415 3.84302 4.74029C3.4973 5.33665 3.29851 6.02809 3.29851 6.76447C3.29812 7.42738 3.46137 8.08014 3.77377 8.66483C4.08616 9.24951 4.53805 9.74805 5.08933 10.1162C4.44999 10.0959 3.82476 9.92311 3.26567 9.61233V9.66418C3.2656 10.5939 3.58721 11.4951 4.17593 12.2147C4.76464 12.9344 5.5842 13.4281 6.49554 13.6123C5.90245 13.7728 5.28063 13.7964 4.67706 13.6814C4.93419 14.4814 5.43505 15.181 6.10952 15.6822C6.78399 16.1834 7.59831 16.4612 8.43848 16.4766C7.01225 17.5962 5.25086 18.2035 3.43766 18.2008C3.11647 18.2009 2.79555 18.1822 2.47656 18.1447C4.31706 19.328 6.45954 19.9561 8.64764 19.9536C16.0547 19.9536 20.1039 13.8189 20.1039 8.49825C20.1039 8.32539 20.0996 8.1508 20.0918 7.97794C20.8794 7.40835 21.5593 6.70301 22.0996 5.89499L22.1013 5.89239Z" fill="#FCFCFC" />
