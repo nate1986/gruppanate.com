@@ -1361,18 +1361,18 @@ canvas {
 }
 
 .text-block2 {
-  max-width: 435px;
+  max-width: 580px;
   margin: 0 0 0 150px;
 }
 @media (max-width: 1440px) {
   .text-block2 {
-    max-width: 352px;
+    max-width: 465px;
     margin: 0 0 0 115px;
   }
 }
 @media (max-width: 1024px) {
   .text-block2 {
-    max-width: 450px;
+    max-width: 605px;
     margin: 0;
   }
 }
