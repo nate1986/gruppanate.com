@@ -17,7 +17,10 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-PGFWWX9CHN');
+        gtag('config', 'G-PGFWWX9CHN', {
+            'page_title': 'main_ru',
+            'currency': 'INR'
+        });
         gtag('config', 'AW-11151945413');	
     </script>
     <!-- End of Google tag (gtag.js) -->
@@ -87,7 +90,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'New' });">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'select_content', { 'content_type': 'texts', 'content_id': 'New' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
@@ -234,7 +237,7 @@
                                                     <div class="audio-controls-bar-current"></div>
                                                 </div>
                                                 <div class="voice-assistant-item-text-wrap">
-                                                    <button class="flex-center tab-item" onclick="gtag('event', 'click', { 'event_category': 'Texts', 'event_label': 'SinRossi' });">
+                                                    <button class="flex-center tab-item" onclick="gtag('event', 'select_content', { 'content_type': 'texts', 'content_id': 'SinRossi' });">
                                                         <div class="list-decor"></div>
                                                         <p class="text-3 gray text-show">смотреть текст</p>
                                                         <p class="text-3 text-hidden">скрыть текст</p>
