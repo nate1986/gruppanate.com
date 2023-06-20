@@ -21,28 +21,10 @@
     </script>
     <!-- End of Google tag (gtag.js) -->
 
-    <!-- Event snippet for conversion conversion page
-In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
-    <script>
-        function gtag_report_conversion(url) {
-            var callback = function () {
-                if (typeof(url) != 'undefined') {
-                    window.location = url;
-                    }
-                };
-            gtag('event', 'conversion', {
-                'send_to': '11151945413/FeS6CImK2K4YEMXd1MUp',
-                'event_callback': callback
-            });
-        return false;
-    }
-    </script>
-
-
     <!-- Event snippet for Conversion page -->>
     <script>
         gtag('event', 'conversion', {
-            'send_to': 'G-PGFWWX9CHN',
+            'send_to': '11151945413/FeS6CImK2K4YEMXd1MUp',
         });
     </script>
 
@@ -101,7 +83,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <div>
                     <div class="voice-assistant-item topical-player" data-audio="mus/rossiya.mp3">
                         <div class="voice-assistant-item-button">
-                            <button class="play-button" onclick="gtag('event', 'conversion', { 'content_type': 'listen', 'content_id': 'New', 'gtag_report_conversion': true });"></button>
+                            <button class="play-button" onclick="gtag('event', 'conversion', { 'content_type': 'listen', 'content_id': 'New'});"></button>
                         </div>
                         <span>Свежее</span>
 
