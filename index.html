@@ -21,13 +21,31 @@
     </script>
     <!-- End of Google tag (gtag.js) -->
 
-    <!-- Event snippet for Conversion page -->
+    <!-- Event snippet for conversion conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+    <script>
+        function gtag_report_conversion(url) {
+            var callback = function () {
+                if (typeof(url) != 'undefined') {
+                    window.location = url;
+                    }
+                };
+            gtag('event', 'conversion', {
+                'send_to': 'AW-11151945413/FeS6CImK2K4YEMXd1MUp',
+                'event_callback': callback
+            });
+        return false;
+    }
+    </script>
+
+
+    <!-- Event snippet for Conversion page -->>
     <script>
         gtag('event', 'conversion', {
             'send_to': 'G-PGFWWX9CHN',
         });
     </script>
-    <!-- End of Event snippet for Conversion page -->
+
 
 </head>
     
@@ -53,7 +71,7 @@
     <main>
         <div class="hero-buttons-block">
             <div class="mobile-menu">
-                <button class="btn mobile-btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'MobMenu' });">
+                <button class="btn mobile-btn" onclick="gtag_report_conversion();" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'MobMenu' });">
                     <svg class="open" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.66667 10V11.3333H1.33333V10H8.66667ZM12 5.33334V6.66667H0V5.33334H12ZM10.6667 0.666672V2.00001H3.33333V0.666672H10.6667Z" fill="#FCFCFC" />
                     </svg>
