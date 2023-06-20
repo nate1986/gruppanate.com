@@ -71,7 +71,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     <main>
         <div class="hero-buttons-block">
             <div class="mobile-menu">
-                <button class="btn mobile-btn" onclick="gtag_report_conversion();" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'MobMenu' });">
+                <button class="btn mobile-btn" onclick="gtag('event', 'click', { 'event_category': 'Buttons', 'event_label': 'MobMenu' });">
                     <svg class="open" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.66667 10V11.3333H1.33333V10H8.66667ZM12 5.33334V6.66667H0V5.33334H12ZM10.6667 0.666672V2.00001H3.33333V0.666672H10.6667Z" fill="#FCFCFC" />
                     </svg>
@@ -101,7 +101,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <div>
                     <div class="voice-assistant-item topical-player" data-audio="mus/rossiya.mp3">
                         <div class="voice-assistant-item-button">
-                            <button class="play-button" onclick="gtag('event', 'conversion', { 'content_type': 'listen', 'content_id': 'New' });"></button>
+                            <button class="play-button" onclick="gtag('event', 'conversion', { 'content_type': 'listen', 'content_id': 'New', 'gtag_report_conversion': true });"></button>
                         </div>
                         <span>Свежее</span>
 
