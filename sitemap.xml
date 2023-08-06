@@ -60,4 +60,14 @@
         <changefreq>yearly</changefreq>
         <priority>0.8</priority>
     </url>
+        <url>
+        <loc>https://gruppanate.com/single5.html</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://gruppanate.com/single5_en.html</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>

@@ -2,3 +2,6 @@ User-agent: *
 Disallow: /js/
 Disallow: /fonts/
 Disallow: /css/
+Disallow: /www.gruppanate.com/
+Disallow: /http://www.gruppanate.com/
+Disallow: /http://gruppanate.com/
