@@ -4,6 +4,7 @@
         <loc>https://gruppanate.com/index.html</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+        <rel="canonical">https://gruppanate.com/index.html</rel>
     </url>
     <url>
         <loc>https://gruppanate.com/index_en.html</loc>
