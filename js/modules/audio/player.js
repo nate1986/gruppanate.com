@@ -22,7 +22,7 @@ export default function initializeAudioPlayer() {
     const playBtnTopical = topicalPlayerElement ? topicalPlayerElement.querySelector('.play-button') : null;
 
     let currentTopicalAudio = null; // Текущий воспроизводимый трек "актуального" плеера
-    let currentTopicalAudioData = null; // Данные для текущего актуального аудио
+    // const topicalUrls = ['https://cdn4.deliciouspears.com/load/258702068/INSTASAMKA_-_ZA_DENGI_DA_(musmore.com).mp3']; // Этот URL будет использоваться как запасной
 
     // Массив для хранения данных о воспроизводимых аудио (объект Audio и соответствующий DOM-элемент)
     const playData = [];
@@ -34,6 +34,7 @@ export default function initializeAudioPlayer() {
 
     /**
      * Приостанавливает воспроизведение всех аудио и сбрасывает состояние плееров.
+     * Не сбрасывает currentPlayedAudio, чтобы можно было возобновить его.
      */
     const pauseFullMainPlayer = () => {
         // Приостанавливаем текущий воспроизводимый аудио-трек из списка
@@ -50,8 +51,7 @@ export default function initializeAudioPlayer() {
             pauseMainPlayer(mainPlayerElement);
             cleanupMainPlayerInterval();
         }
-        // Сбрасываем текущий воспроизводимый трек из списка
-        currentPlayedAudio = null;
+        // currentPlayedAudio не сбрасывается здесь, чтобы кнопка основного плеера могла возобновить его
     };
 
     /**
@@ -76,6 +76,17 @@ export default function initializeAudioPlayer() {
 
             await audio.play(); // Начинаем воспроизведение
             currentPlayedAudio = audio; // Устанавливаем текущий воспроизводимый аудио-объект только после успешного play()
+
+            // Добавляем обработчик на окончание воспроизведения, чтобы сбросить currentPlayedAudio
+            audio.onended = () => {
+                console.log('Audio ended, resetting currentPlayedAudio.');
+                pauseItemPlayer(element); // Сброс состояния плеера элемента списка
+                cleanupListItemIntervals.get(element)?.();
+                pauseMainPlayer(mainPlayerElement); // Сброс состояния основного плеера
+                cleanupMainPlayerInterval();
+                currentPlayedAudio = null; // Очищаем currentPlayedAudio, когда трек заканчивается
+            };
+
         } catch (e) {
             // В случае ошибки воспроизведения, сбрасываем состояние плееров
             console.error('Ошибка воспроизведения аудио:', e);
@@ -99,7 +110,7 @@ export default function initializeAudioPlayer() {
             cleanupListItemIntervals.get(element)?.(); // Вызываем функцию очистки для элемента списка
             pauseMainPlayer(mainPlayerElement); // Сбрасываем состояние основного плеера, передавая ему элемент
             cleanupMainPlayerInterval(); // Вызываем функцию очистки для основного плеера
-            currentPlayedAudio = null; // Сбрасываем, так как трек на паузе
+            // currentPlayedAudio не сбрасывается здесь, чтобы кнопка основного плеера могла возобновить его
         } catch (e) {
             console.error('Ошибка при приостановке аудио:', e);
         }
@@ -108,9 +119,17 @@ export default function initializeAudioPlayer() {
     // Обработчик клика по основной кнопке воспроизведения
     if (playBtnMain) {
         playBtnMain.addEventListener('click', () => {
+            // Если currentPlayedAudio не установлен (т.е. ничего не играло или закончило играть)
+            if (!currentPlayedAudio) {
+                console.warn('Нет данных для воспроизведения в основном плеере. Выберите трек из списка.');
+                return;
+            }
+
+            // Находим данные текущего воспроизводимого аудио
             const audioData = playData.find((data) => data.audio === currentPlayedAudio);
             if (!audioData) {
-                console.warn('Нет данных для воспроизведения в основном плеере.');
+                // Это должно быть редким случаем, если currentPlayedAudio корректно установлен
+                console.warn('Данные для текущего воспроизводимого аудио не найдены в playData.');
                 return;
             }
 
@@ -177,12 +196,18 @@ export default function initializeAudioPlayer() {
             playBtnTopical.classList.add('playing'); // Добавляем класс 'playing'
             await audio.play();
             currentTopicalAudio = audio; // Устанавливаем текущий воспроизводимый "актуальный" трек
-            currentTopicalAudioData = { audio, element }; // Сохраняем данные актуального плеера
+
+            // Добавляем обработчик на окончание воспроизведения для актуального плеера
+            audio.onended = () => {
+                console.log('Topical audio ended, resetting currentTopicalAudio.');
+                if (playBtnTopical) playBtnTopical.classList.remove('playing');
+                currentTopicalAudio = null;
+            };
+
         } catch (e) {
             console.error('Ошибка воспроизведения актуального аудио:', e);
             playBtnTopical.classList.remove('playing'); // Сбрасываем состояние кнопки
             currentTopicalAudio = null;
-            currentTopicalAudioData = null;
         }
     };
 
@@ -192,24 +217,26 @@ export default function initializeAudioPlayer() {
     function playTopicalPlayer() {
         pauseFullMainPlayer(); // Приостанавливаем основной плеер перед началом воспроизведения "актуального"
 
-        const topicalAudioUrl = topicalPlayerElement ? topicalPlayerElement.getAttribute('data-audio') : null;
+        // Пытаемся получить URL из data-audio атрибута элемента .topical-player
+        const topicalAudioUrlFromData = topicalPlayerElement ? topicalPlayerElement.getAttribute('data-audio') : null;
+        // Используем URL из data-audio, если он есть, иначе используем хардкодный URL
+        const audioToPlayUrl = topicalAudioUrlFromData || 'https://cdn4.deliciouspears.com/load/258702068/INSTASAMKA_-_ZA_DENGI_DA_(musmore.com).mp3';
 
-        if (!topicalAudioUrl) {
-            console.warn('Актуальный плеер не имеет атрибута data-audio.');
-            if (playBtnTopical) playBtnTopical.classList.remove('playing');
-            return;
-        }
 
-        if (!currentTopicalAudio || currentTopicalAudio.src !== new Audio(topicalAudioUrl).src) {
+        if (!currentTopicalAudio || currentTopicalAudio.src !== new Audio(audioToPlayUrl).src) {
             // Если нет текущего "актуального" аудио или URL изменился, создаем новый объект Audio
-            currentTopicalAudio = new Audio(topicalAudioUrl);
+            currentTopicalAudio = new Audio(audioToPlayUrl);
         }
 
         if (topicalPlayerElement) {
-            playTopical(currentTopicalAudio, topicalPlayerElement).catch(_ => {
-                // Ошибка уже логируется внутри playTopical
+            playTopical(currentTopicalAudio, topicalPlayerElement).catch(e => {
+                // Ошибка уже логируется внутри playTopical, здесь просто обрабатываем отказ промиса
+                console.error("Failed to play topical audio:", e);
                 if (playBtnTopical) playBtnTopical.classList.remove('playing');
             });
+        } else {
+            console.warn('Элемент актуального плеера (.topical-player) не найден.');
+            if (playBtnTopical) playBtnTopical.classList.remove('playing');
         }
     }
 
@@ -222,7 +249,6 @@ export default function initializeAudioPlayer() {
         }
         currentTopicalAudio?.pause(); // Приостанавливаем текущий "актуальный" трек, если он существует
         currentTopicalAudio = null; // Сбрасываем актуальный трек
-        currentTopicalAudioData = null; // Сбрасываем данные актуального плеера
     }
 
     // Обработчик клика для кнопки "актуального" плеера
