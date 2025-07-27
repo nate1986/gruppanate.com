@@ -18,15 +18,15 @@ export default function initializeAudioPlayer() {
     const playBtnMain = mainPlayerElement ? mainPlayerElement.querySelector('.player button.play-button') : null;
 
     // Получаем кнопку воспроизведения "актуального" плеера
-    const playBtnTopical = document.querySelector('.topical-player .play-button');
+    const topicalPlayerElement = document.querySelector('.topical-player');
+    const playBtnTopical = topicalPlayerElement ? topicalPlayerElement.querySelector('.play-button') : null;
 
-    let currentTopicalAudio; // Текущий воспроизводимый трек "актуального" плеера
-    // URL для "актуального" трека (пока только один)
-    const topicalUrls = ['https://cdn4.deliciouspears.com/load/258702068/INSTASAMKA_-_ZA_DENGI_DA_(musmore.com).mp3'];
+    let currentTopicalAudio = null; // Текущий воспроизводимый трек "актуального" плеера
+    let currentTopicalAudioData = null; // Данные для текущего актуального аудио
 
     // Массив для хранения данных о воспроизводимых аудио (объект Audio и соответствующий DOM-элемент)
     const playData = [];
-    let currentPlayedAudio = null; // Текущий воспроизводимый аудио-объект
+    let currentPlayedAudio = null; // Текущий воспроизводимый аудио-объект из списка
 
     // Переменные для хранения функций очистки интервалов
     let cleanupMainPlayerInterval = () => {};
@@ -36,15 +36,22 @@ export default function initializeAudioPlayer() {
      * Приостанавливает воспроизведение всех аудио и сбрасывает состояние плееров.
      */
     const pauseFullMainPlayer = () => {
-        // Находим аудио, которое в данный момент не на паузе
-        const playedAudioData = playData.find(({ audio }) => audio && !audio.paused);
-        if (playedAudioData) {
-            playedAudioData.audio.pause(); // Приостанавливаем аудио
-            pauseItemPlayer(playedAudioData.element); // Сбрасываем состояние плеера элемента списка
-            cleanupListItemIntervals.get(playedAudioData.element)?.(); // Вызываем функцию очистки для элемента списка
-            pauseMainPlayer(mainPlayerElement); // Сбрасываем состояние основного плеера, передавая ему элемент
-            cleanupMainPlayerInterval(); // Вызываем функцию очистки для основного плеера
+        // Приостанавливаем текущий воспроизводимый аудио-трек из списка
+        if (currentPlayedAudio && !currentPlayedAudio.paused) {
+            currentPlayedAudio.pause();
+            const playedAudioData = playData.find(data => data.audio === currentPlayedAudio);
+            if (playedAudioData) {
+                pauseItemPlayer(playedAudioData.element);
+                cleanupListItemIntervals.get(playedAudioData.element)?.();
+            }
         }
+        // Приостанавливаем основной плеер
+        if (mainPlayerElement) {
+            pauseMainPlayer(mainPlayerElement);
+            cleanupMainPlayerInterval();
+        }
+        // Сбрасываем текущий воспроизводимый трек из списка
+        currentPlayedAudio = null;
     };
 
     /**
@@ -53,31 +60,30 @@ export default function initializeAudioPlayer() {
      */
     const handlePlayMainPlayer = async (audioData) => {
         const { audio, element } = audioData;
+
+        // Если это тот же трек и он уже играет, ничего не делаем
+        if (currentPlayedAudio === audio && !audio.paused) {
+            return;
+        }
+
         pauseTopicalPlayer(); // Приостанавливаем "актуальный" плеер перед началом воспроизведения основного
+        pauseFullMainPlayer(); // Приостанавливаем любой другой играющий трек из списка
 
         try {
             // Вызываем функции воспроизведения и сохраняем их функции очистки
             cleanupListItemIntervals.set(element, playItemListPlayer(audio, element));
             cleanupMainPlayerInterval = playMainPlayer(audio, mainPlayerElement); // Передаем mainPlayerElement
 
-            // Приостанавливаем все другие воспроизводимые аудио в списке
-            playData.forEach((data) => {
-                if (data.audio && data.audio !== audio && !data.audio.paused) {
-                    data.audio.pause();
-                    pauseItemPlayer(data.element);
-                    cleanupListItemIntervals.get(data.element)?.(); // Вызываем функцию очистки для других элементов
-                }
-            });
-
             await audio.play(); // Начинаем воспроизведение
-            currentPlayedAudio = audio; // Устанавливаем текущий воспроизводимый аудио-объект
+            currentPlayedAudio = audio; // Устанавливаем текущий воспроизводимый аудио-объект только после успешного play()
         } catch (e) {
             // В случае ошибки воспроизведения, сбрасываем состояние плееров
+            console.error('Ошибка воспроизведения аудио:', e);
             pauseItemPlayer(element);
             cleanupListItemIntervals.get(element)?.();
             pauseMainPlayer(mainPlayerElement);
             cleanupMainPlayerInterval();
-            console.error('Ошибка воспроизведения аудио:', e);
+            currentPlayedAudio = null; // Сбрасываем, так как воспроизведение не удалось
         }
     };
 
@@ -88,11 +94,12 @@ export default function initializeAudioPlayer() {
     const handlePauseMainPlayer = async (audioData) => {
         const { audio, element } = audioData;
         try {
+            audio.pause(); // Приостанавливаем аудио
             pauseItemPlayer(element); // Сбрасываем состояние плеера элемента списка
             cleanupListItemIntervals.get(element)?.(); // Вызываем функцию очистки для элемента списка
             pauseMainPlayer(mainPlayerElement); // Сбрасываем состояние основного плеера, передавая ему элемент
             cleanupMainPlayerInterval(); // Вызываем функцию очистки для основного плеера
-            audio.pause(); // Приостанавливаем аудио
+            currentPlayedAudio = null; // Сбрасываем, так как трек на паузе
         } catch (e) {
             console.error('Ошибка при приостановке аудио:', e);
         }
@@ -101,7 +108,6 @@ export default function initializeAudioPlayer() {
     // Обработчик клика по основной кнопке воспроизведения
     if (playBtnMain) {
         playBtnMain.addEventListener('click', () => {
-            // Находим данные текущего воспроизводимого аудио
             const audioData = playData.find((data) => data.audio === currentPlayedAudio);
             if (!audioData) {
                 console.warn('Нет данных для воспроизведения в основном плеере.');
@@ -109,10 +115,8 @@ export default function initializeAudioPlayer() {
             }
 
             if (currentPlayedAudio.paused) {
-                // Если аудио на паузе, возобновляем воспроизведение
                 return handlePlayMainPlayer(audioData);
             } else {
-                // Если аудио воспроизводится, ставим на паузу
                 return handlePauseMainPlayer(audioData);
             }
         });
@@ -127,22 +131,18 @@ export default function initializeAudioPlayer() {
      * @param {HTMLElement} element - DOM-элемент элемента списка.
      */
     const handleAudioListItemBtnClick = (src, element) => {
-        // Ищем, есть ли уже данные для этого элемента в массиве playData
         let audioData = playData.find((data) => data.element === element);
 
         if (!audioData) {
-            // Если данных нет, создаем новый объект Audio и добавляем его в playData
             const audio = new Audio(src);
             const newData = { audio, element };
             playData.push(newData);
-            audioData = newData; // Устанавливаем audioData для дальнейшего использования
+            audioData = newData;
         }
 
         if (audioData.audio.paused) {
-            // Если аудио на паузе, возобновляем воспроизведение
             return handlePlayMainPlayer(audioData);
         } else {
-            // Если аудио воспроизводится, ставим на паузу
             return handlePauseMainPlayer(audioData);
         }
     };
@@ -150,8 +150,8 @@ export default function initializeAudioPlayer() {
     // Добавляем обработчики событий для всех элементов аудио-списка
     if (audioBlockItems.length) {
         audioBlockItems.forEach((item) => {
-            const audioUrl = item.getAttribute('data-audio'); // Получаем URL аудио из атрибута data-audio
-            const playBtn = item.querySelector('.play-button'); // Получаем кнопку воспроизведения элемента
+            const audioUrl = item.getAttribute('data-audio');
+            const playBtn = item.querySelector('.play-button');
 
             if (audioUrl && playBtn) {
                 playBtn.addEventListener('click', () => handleAudioListItemBtnClick(audioUrl, item));
@@ -166,19 +166,23 @@ export default function initializeAudioPlayer() {
     /**
      * Воспроизводит аудио для "актуального" плеера.
      * @param {HTMLAudioElement} audio - Объект Audio для воспроизведения.
+     * @param {HTMLElement} element - Корневой DOM-элемент актуального плеера.
      */
-    const playTopical = async (audio) => {
-        if (!playBtnTopical) {
-            console.warn('Кнопка актуального плеера не найдена.');
+    const playTopical = async (audio, element) => {
+        if (!playBtnTopical || !element) {
+            console.warn('Кнопка актуального плеера или его элемент не найдены.');
             return;
         }
         try {
+            playBtnTopical.classList.add('playing'); // Добавляем класс 'playing'
             await audio.play();
             currentTopicalAudio = audio; // Устанавливаем текущий воспроизводимый "актуальный" трек
-            playBtnTopical.classList.add('playing'); // Добавляем класс 'playing'
+            currentTopicalAudioData = { audio, element }; // Сохраняем данные актуального плеера
         } catch (e) {
             console.error('Ошибка воспроизведения актуального аудио:', e);
             playBtnTopical.classList.remove('playing'); // Сбрасываем состояние кнопки
+            currentTopicalAudio = null;
+            currentTopicalAudioData = null;
         }
     };
 
@@ -188,18 +192,25 @@ export default function initializeAudioPlayer() {
     function playTopicalPlayer() {
         pauseFullMainPlayer(); // Приостанавливаем основной плеер перед началом воспроизведения "актуального"
 
-        if (!currentTopicalAudio) {
-            // Если нет текущего "актуального" аудио, создаем новый объект Audio
-            return playTopical(new Audio(topicalUrls[0])).catch(_ => {
+        const topicalAudioUrl = topicalPlayerElement ? topicalPlayerElement.getAttribute('data-audio') : null;
+
+        if (!topicalAudioUrl) {
+            console.warn('Актуальный плеер не имеет атрибута data-audio.');
+            if (playBtnTopical) playBtnTopical.classList.remove('playing');
+            return;
+        }
+
+        if (!currentTopicalAudio || currentTopicalAudio.src !== new Audio(topicalAudioUrl).src) {
+            // Если нет текущего "актуального" аудио или URL изменился, создаем новый объект Audio
+            currentTopicalAudio = new Audio(topicalAudioUrl);
+        }
+
+        if (topicalPlayerElement) {
+            playTopical(currentTopicalAudio, topicalPlayerElement).catch(_ => {
+                // Ошибка уже логируется внутри playTopical
                 if (playBtnTopical) playBtnTopical.classList.remove('playing');
             });
         }
-
-        // Если есть текущее "актуальное" аудио, возобновляем его
-        return playTopical(currentTopicalAudio).catch(_ => {
-            if (playBtnTopical) playBtnTopical.classList.remove('playing');
-            // Если play() был прерван, убедимся, что кнопка не осталась в состоянии "играет"
-        });
     }
 
     /**
@@ -210,6 +221,8 @@ export default function initializeAudioPlayer() {
             playBtnTopical.classList.remove('playing');
         }
         currentTopicalAudio?.pause(); // Приостанавливаем текущий "актуальный" трек, если он существует
+        currentTopicalAudio = null; // Сбрасываем актуальный трек
+        currentTopicalAudioData = null; // Сбрасываем данные актуального плеера
     }
 
     // Обработчик клика для кнопки "актуального" плеера
@@ -218,7 +231,8 @@ export default function initializeAudioPlayer() {
             if (currentTopicalAudio && !currentTopicalAudio.paused) {
                 return pauseTopicalPlayer();
             }
-            pauseFullMainPlayer(); // Приостанавливаем основной плеер, если он играет
+            // Если актуальный плеер запускается, приостанавливаем основной
+            pauseFullMainPlayer();
             return playTopicalPlayer();
         });
     }
