@@ -22,7 +22,6 @@ export default function initializeAudioPlayer() {
     const playBtnTopical = topicalPlayerElement ? topicalPlayerElement.querySelector('.play-button') : null;
 
     let currentTopicalAudio = null; // Текущий воспроизводимый трек "актуального" плеера
-    // const topicalUrls = ['https://cdn4.deliciouspears.com/load/258702068/INSTASAMKA_-_ZA_DENGI_DA_(musmore.com).mp3']; // Этот URL будет использоваться как запасной
 
     // Массив для хранения данных о воспроизводимых аудио (объект Audio и соответствующий DOM-элемент)
     const playData = [];
@@ -33,7 +32,7 @@ export default function initializeAudioPlayer() {
     let cleanupListItemIntervals = new WeakMap(); // Для каждого элемента списка
 
     /**
-     * Приостанавливает воспроизведение всех аудио и сбрасывает состояние плееров.
+     * Приостанавливает воспроизведение всех аудио из списка и сбрасывает состояние основного плеера.
      * Не сбрасывает currentPlayedAudio, чтобы можно было возобновить его.
      */
     const pauseFullMainPlayer = () => {
@@ -46,7 +45,7 @@ export default function initializeAudioPlayer() {
                 cleanupListItemIntervals.get(playedAudioData.element)?.();
             }
         }
-        // Приостанавливаем основной плеер
+        // Приостанавливаем основной плеер (визуально и интервалы)
         if (mainPlayerElement) {
             pauseMainPlayer(mainPlayerElement);
             cleanupMainPlayerInterval();
@@ -215,18 +214,38 @@ export default function initializeAudioPlayer() {
      * Начинает воспроизведение "актуального" плеера.
      */
     function playTopicalPlayer() {
-        pauseFullMainPlayer(); // Приостанавливаем основной плеер перед началом воспроизведения "актуального"
+        // При запуске актуального плеера, всегда приостанавливаем основной плеер
+        pauseFullMainPlayer();
 
         // Пытаемся получить URL из data-audio атрибута элемента .topical-player
         const topicalAudioUrlFromData = topicalPlayerElement ? topicalPlayerElement.getAttribute('data-audio') : null;
         // Используем URL из data-audio, если он есть, иначе используем хардкодный URL
+        // ВАЖНО: Убедитесь, что этот хардкодный URL ведет к полному треку, а не к семплу,
+        // если вы хотите, чтобы он играл полный трек по умолчанию.
         const audioToPlayUrl = topicalAudioUrlFromData || 'https://cdn4.deliciouspears.com/load/258702068/INSTASAMKA_-_ZA_DENGI_DA_(musmore.com).mp3';
 
 
-        if (!currentTopicalAudio || currentTopicalAudio.src !== new Audio(audioToPlayUrl).src) {
-            // Если нет текущего "актуального" аудио или URL изменился, создаем новый объект Audio
-            currentTopicalAudio = new Audio(audioToPlayUrl);
+        // Если текущий актуальный трек уже существует и это тот же самый URL,
+        // то просто переключаем его состояние (пауза/воспроизведение).
+        if (currentTopicalAudio && currentTopicalAudio.src === new Audio(audioToPlayUrl).src) {
+            if (currentTopicalAudio.paused) {
+                playTopical(currentTopicalAudio, topicalPlayerElement).catch(e => {
+                    console.error("Failed to resume topical audio:", e);
+                    if (playBtnTopical) playBtnTopical.classList.remove('playing');
+                });
+            } else {
+                pauseTopicalPlayer(); // Если играет, ставим на паузу
+            }
+            return; // Выходим, так как действие выполнено
         }
+
+        // Если это новый трек или currentTopicalAudio не установлен,
+        // создаем новый объект Audio и запускаем его.
+        if (currentTopicalAudio) { // Если был какой-то другой актуальный трек, ставим его на паузу и сбрасываем
+            pauseTopicalPlayer();
+        }
+        currentTopicalAudio = new Audio(audioToPlayUrl);
+
 
         if (topicalPlayerElement) {
             playTopical(currentTopicalAudio, topicalPlayerElement).catch(e => {
@@ -254,12 +273,9 @@ export default function initializeAudioPlayer() {
     // Обработчик клика для кнопки "актуального" плеера
     if (playBtnTopical) {
         playBtnTopical.addEventListener('click', () => {
-            if (currentTopicalAudio && !currentTopicalAudio.paused) {
-                return pauseTopicalPlayer();
-            }
-            // Если актуальный плеер запускается, приостанавливаем основной
-            pauseFullMainPlayer();
-            return playTopicalPlayer();
+            // Логика переключения состояния "актуального" плеера
+            // playTopicalPlayer() теперь содержит логику для переключения паузы/воспроизведения
+            playTopicalPlayer();
         });
     }
      }
