@@ -20,15 +20,14 @@ function getTimeCodeFromNum(num) {
     minutes -= hours * 60;
 
     if (hours === 0) {
-        // Если часов нет, возвращаем MM:SS
         return `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
     }
-    // Иначе возвращаем HH:MM:SS
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
 }
 
 // Объект для хранения ID интервалов для каждого элемента списка
 const listItemIntervals = new WeakMap();
+const listItemTimelineHandlers = new WeakMap(); // Для хранения ссылок на функции обработчиков событий
 
 /**
  * Активирует плеер элемента списка и начинает воспроизведение.
@@ -37,10 +36,16 @@ const listItemIntervals = new WeakMap();
  * @returns {function} Функция для очистки интервала обновления прогресс-бара.
  */
 const playItemListPlayer = (audio, element) => {
+    // Получаем все необходимые элементы управления внутри переданного корневого элемента
     const playBtn = getPlayBtn(element);
-    if (!playBtn) {
-        console.warn('listItemPlayer: Кнопка воспроизведения не найдена для элемента.', element);
-        return () => {}; // Возвращаем пустую функцию очистки
+    const timeline = element.querySelector('.audio-controls-bar');
+    const progressBar = element.querySelector('.audio-controls-bar-current');
+    const timeDisplay = element.querySelector('.audio-controls-time');
+
+    // Проверяем, что все элементы найдены
+    if (!playBtn || !timeline || !progressBar || !timeDisplay) {
+        console.warn('playItemListPlayer: Не найдены необходимые элементы управления плеером в:', element);
+        return () => {};
     }
 
     // Очищаем предыдущий интервал для этого элемента, если он существует
@@ -50,42 +55,32 @@ const playItemListPlayer = (audio, element) => {
 
     playBtn.classList.add('playing'); // Добавляем класс 'playing' для стилизации
 
-    // Обработчик клика по полосе прогресса для перемотки
-    const timeline = element.querySelector('.audio-controls-bar');
-    if (timeline) {
-        // Удаляем старый обработчик, чтобы избежать дублирования
-        const oldTimelineHandler = timeline.dataset.timelineHandler;
-        if (oldTimelineHandler) {
-            timeline.removeEventListener('click', eval(oldTimelineHandler));
-        }
-
-        const newTimelineHandler = (e) => {
-            const timelineWidth = parseFloat(window.getComputedStyle(timeline).width);
-            if (isNaN(timelineWidth) || timelineWidth === 0 || !isFinite(audio.duration) || isNaN(audio.duration)) {
-                console.warn('listItemPlayer: Ширина таймлайна или длительность аудио не определены для элемента.', element);
-                return;
-            }
-            const timeToSeek = (e.offsetX / timelineWidth) * audio.duration;
-            audio.currentTime = timeToSeek;
-        };
-        timeline.addEventListener('click', newTimelineHandler, false);
-        timeline.dataset.timelineHandler = newTimelineHandler.name || newTimelineHandler.toString(); // Сохраняем ссылку на функцию
-
-    } else {
-        console.warn('listItemPlayer: Элемент таймлайна не найден для элемента.', element);
+    // Удаляем старый обработчик события timeline, чтобы избежать дублирования
+    const oldHandler = listItemTimelineHandlers.get(element);
+    if (oldHandler) {
+        timeline.removeEventListener('click', oldHandler);
     }
+
+    const newTimelineHandler = (e) => {
+        const timelineWidth = parseFloat(window.getComputedStyle(timeline).width);
+        if (isNaN(timelineWidth) || timelineWidth === 0 || !isFinite(audio.duration) || isNaN(audio.duration)) {
+            console.warn('listItemPlayer: Ширина таймлайна или длительность аудио не определены для элемента.', element);
+            return;
+        }
+        const timeToSeek = (e.offsetX / timelineWidth) * audio.duration;
+        audio.currentTime = timeToSeek;
+    };
+    timeline.addEventListener('click', newTimelineHandler, false);
+    listItemTimelineHandlers.set(element, newTimelineHandler); // Сохраняем ссылку на функцию
 
     // Обновление прогресс-бара и времени каждые 500 мс
     const intervalId = setInterval(() => {
-        const progressBar = element.querySelector('.audio-controls-bar-current');
-        const timeDisplay = element.querySelector('.audio-controls-time');
-        if (progressBar && timeDisplay && !isNaN(audio.duration) && isFinite(audio.duration)) {
+        if (!isNaN(audio.duration) && isFinite(audio.duration)) {
             progressBar.style.width = (audio.currentTime / audio.duration) * 100 + '%';
             timeDisplay.textContent = getTimeCodeFromNum(audio.currentTime);
-        } else if (progressBar && timeDisplay && (isNaN(audio.duration) || !isFinite(audio.duration))) {
-            // Если длительность еще не определена, можно показать 0:00
+        } else {
             progressBar.style.width = '0%';
-            timeDisplay.textContent = '0:00';
+            timeDisplay.textContent = '0:00'; // Показываем 0:00, если длительность еще не определена
         }
     }, 500);
 
@@ -96,6 +91,11 @@ const playItemListPlayer = (audio, element) => {
         if (listItemIntervals.has(element)) {
             clearInterval(listItemIntervals.get(element));
             listItemIntervals.delete(element);
+            // Также удаляем обработчик события при очистке
+            if (listItemTimelineHandlers.has(element)) {
+                timeline.removeEventListener('click', listItemTimelineHandlers.get(element));
+                listItemTimelineHandlers.delete(element);
+            }
         }
     };
 };
@@ -103,7 +103,7 @@ const playItemListPlayer = (audio, element) => {
 /**
  * Приостанавливает плеер элемента списка.
  * @param {HTMLElement} element - Элемент списка, к которому относится плеер.
- * @returns {function} Функция для очистки интервала обновления прогресс-бара.
+ * @returns {function} Пустая функция очистки.
  */
 const pauseItemPlayer = (element) => {
     const playBtn = getPlayBtn(element);
@@ -114,8 +114,14 @@ const pauseItemPlayer = (element) => {
     if (listItemIntervals.has(element)) {
         clearInterval(listItemIntervals.get(element));
         listItemIntervals.delete(element);
+        // Также удаляем обработчик события при паузе
+        const timeline = element.querySelector('.audio-controls-bar');
+        if (timeline && listItemTimelineHandlers.has(element)) {
+            timeline.removeEventListener('click', listItemTimelineHandlers.get(element));
+            listItemTimelineHandlers.delete(element);
+        }
     }
-    return () => {}; // Возвращаем пустую функцию очистки
+    return () => {};
 };
 
 // Экспортируем функции для использования в других модулях

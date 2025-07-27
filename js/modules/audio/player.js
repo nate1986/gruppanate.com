@@ -11,8 +11,12 @@ import { pauseItemPlayer, playItemListPlayer } from './listItemPlayer.js';
 export default function initializeAudioPlayer() {
     // Получаем все элементы блоков аудио-списка
     const audioBlockItems = document.querySelectorAll('.voice-assistant-item');
-    // Получаем кнопку воспроизведения основного плеера
-    const playBtnMain = document.querySelector('.player button.play-button');
+
+    // Получаем DOM-элементы основного плеера и его кнопку
+    // Эти запросы теперь выполняются внутри initializeAudioPlayer, которая вызывается после DOMContentLoaded
+    const mainPlayerElement = document.querySelector('.main-player');
+    const playBtnMain = mainPlayerElement ? mainPlayerElement.querySelector('.player button.play-button') : null;
+
     // Получаем кнопку воспроизведения "актуального" плеера
     const playBtnTopical = document.querySelector('.topical-player .play-button');
 
@@ -25,8 +29,8 @@ export default function initializeAudioPlayer() {
     let currentPlayedAudio = null; // Текущий воспроизводимый аудио-объект
 
     // Переменные для хранения функций очистки интервалов
-    let cleanupMainPlayer = () => {};
-    let cleanupListItemPlayer = new WeakMap(); // Для каждого элемента списка
+    let cleanupMainPlayerInterval = () => {};
+    let cleanupListItemIntervals = new WeakMap(); // Для каждого элемента списка
 
     /**
      * Приостанавливает воспроизведение всех аудио и сбрасывает состояние плееров.
@@ -37,9 +41,9 @@ export default function initializeAudioPlayer() {
         if (playedAudioData) {
             playedAudioData.audio.pause(); // Приостанавливаем аудио
             pauseItemPlayer(playedAudioData.element); // Сбрасываем состояние плеера элемента списка
-            cleanupListItemPlayer.get(playedAudioData.element)?.(); // Вызываем функцию очистки для элемента списка
-            pauseMainPlayer(); // Сбрасываем состояние основного плеера
-            cleanupMainPlayer(); // Вызываем функцию очистки для основного плеера
+            cleanupListItemIntervals.get(playedAudioData.element)?.(); // Вызываем функцию очистки для элемента списка
+            pauseMainPlayer(mainPlayerElement); // Сбрасываем состояние основного плеера, передавая ему элемент
+            cleanupMainPlayerInterval(); // Вызываем функцию очистки для основного плеера
         }
     };
 
@@ -53,15 +57,15 @@ export default function initializeAudioPlayer() {
 
         try {
             // Вызываем функции воспроизведения и сохраняем их функции очистки
-            cleanupListItemPlayer.set(element, playItemListPlayer(audio, element));
-            cleanupMainPlayer = playMainPlayer(audio);
+            cleanupListItemIntervals.set(element, playItemListPlayer(audio, element));
+            cleanupMainPlayerInterval = playMainPlayer(audio, mainPlayerElement); // Передаем mainPlayerElement
 
             // Приостанавливаем все другие воспроизводимые аудио в списке
             playData.forEach((data) => {
                 if (data.audio && data.audio !== audio && !data.audio.paused) {
                     data.audio.pause();
                     pauseItemPlayer(data.element);
-                    cleanupListItemPlayer.get(data.element)?.(); // Вызываем функцию очистки для других элементов
+                    cleanupListItemIntervals.get(data.element)?.(); // Вызываем функцию очистки для других элементов
                 }
             });
 
@@ -70,9 +74,9 @@ export default function initializeAudioPlayer() {
         } catch (e) {
             // В случае ошибки воспроизведения, сбрасываем состояние плееров
             pauseItemPlayer(element);
-            cleanupListItemPlayer.get(element)?.();
-            pauseMainPlayer();
-            cleanupMainPlayer();
+            cleanupListItemIntervals.get(element)?.();
+            pauseMainPlayer(mainPlayerElement);
+            cleanupMainPlayerInterval();
             console.error('Ошибка воспроизведения аудио:', e);
         }
     };
@@ -85,9 +89,9 @@ export default function initializeAudioPlayer() {
         const { audio, element } = audioData;
         try {
             pauseItemPlayer(element); // Сбрасываем состояние плеера элемента списка
-            cleanupListItemPlayer.get(element)?.(); // Вызываем функцию очистки для элемента списка
-            pauseMainPlayer(); // Сбрасываем состояние основного плеера
-            cleanupMainPlayer(); // Вызываем функцию очистки для основного плеера
+            cleanupListItemIntervals.get(element)?.(); // Вызываем функцию очистки для элемента списка
+            pauseMainPlayer(mainPlayerElement); // Сбрасываем состояние основного плеера, передавая ему элемент
+            cleanupMainPlayerInterval(); // Вызываем функцию очистки для основного плеера
             audio.pause(); // Приостанавливаем аудио
         } catch (e) {
             console.error('Ошибка при приостановке аудио:', e);
@@ -194,6 +198,7 @@ export default function initializeAudioPlayer() {
         // Если есть текущее "актуальное" аудио, возобновляем его
         return playTopical(currentTopicalAudio).catch(_ => {
             if (playBtnTopical) playBtnTopical.classList.remove('playing');
+            // Если play() был прерван, убедимся, что кнопка не осталась в состоянии "играет"
         });
     }
 
@@ -207,14 +212,13 @@ export default function initializeAudioPlayer() {
         currentTopicalAudio?.pause(); // Приостанавливаем текущий "актуальный" трек, если он существует
     }
 
-    // Закомментированный код для кнопки "актуального" плеера
-    // Если вы хотите активировать эту функциональность, раскомментируйте блок ниже.
+    // Обработчик клика для кнопки "актуального" плеера
     if (playBtnTopical) {
         playBtnTopical.addEventListener('click', () => {
             if (currentTopicalAudio && !currentTopicalAudio.paused) {
                 return pauseTopicalPlayer();
             }
-            pauseFullMainPlayer();
+            pauseFullMainPlayer(); // Приостанавливаем основной плеер, если он играет
             return playTopicalPlayer();
         });
     }
