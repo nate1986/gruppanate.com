@@ -32,11 +32,11 @@ export default function initializeAudioPlayer() {
     let cleanupListItemIntervals = new WeakMap(); // Для каждого элемента списка
 
     /**
-     * Приостанавливает воспроизведение всех аудио из списка и сбрасывает состояние основного плеера.
-     * Не сбрасывает currentPlayedAudio, чтобы можно было возобновить его.
+     * Приостанавливает воспроизведение всех аудио на странице (как из списка, так и актуального).
+     * Сбрасывает визуальное состояние плееров и очищает интервалы.
      */
-    const pauseFullMainPlayer = () => {
-        // Приостанавливаем текущий воспроизводимый аудио-трек из списка
+    const pauseAllAudio = () => {
+        // Приостанавливаем текущий воспроизводимый аудио-трек из списка, если он есть и играет
         if (currentPlayedAudio && !currentPlayedAudio.paused) {
             currentPlayedAudio.pause();
             const playedAudioData = playData.find(data => data.audio === currentPlayedAudio);
@@ -50,7 +50,13 @@ export default function initializeAudioPlayer() {
             pauseMainPlayer(mainPlayerElement);
             cleanupMainPlayerInterval();
         }
-        // currentPlayedAudio не сбрасывается здесь, чтобы кнопка основного плеера могла возобновить его
+        // Приостанавливаем актуальный плеер, если он есть и играет
+        if (currentTopicalAudio && !currentTopicalAudio.paused) {
+            currentTopicalAudio.pause();
+            if (playBtnTopical) {
+                playBtnTopical.classList.remove('playing');
+            }
+        }
     };
 
     /**
@@ -65,8 +71,7 @@ export default function initializeAudioPlayer() {
             return;
         }
 
-        pauseTopicalPlayer(); // Приостанавливаем "актуальный" плеер перед началом воспроизведения основного
-        pauseFullMainPlayer(); // Приостанавливаем любой другой играющий трек из списка
+        pauseAllAudio(); // Приостанавливаем все остальные аудио перед началом воспроизведения
 
         try {
             // Вызываем функции воспроизведения и сохраняем их функции очистки
@@ -75,6 +80,7 @@ export default function initializeAudioPlayer() {
 
             await audio.play(); // Начинаем воспроизведение
             currentPlayedAudio = audio; // Устанавливаем текущий воспроизводимый аудио-объект только после успешного play()
+            currentTopicalAudio = null; // Убеждаемся, что актуальный плеер сброшен
 
             // Добавляем обработчик на окончание воспроизведения, чтобы сбросить currentPlayedAudio
             audio.onended = () => {
@@ -195,6 +201,7 @@ export default function initializeAudioPlayer() {
             playBtnTopical.classList.add('playing'); // Добавляем класс 'playing'
             await audio.play();
             currentTopicalAudio = audio; // Устанавливаем текущий воспроизводимый "актуальный" трек
+            currentPlayedAudio = null; // Убеждаемся, что основной плеер сброшен
 
             // Добавляем обработчик на окончание воспроизведения для актуального плеера
             audio.onended = () => {
@@ -214,8 +221,7 @@ export default function initializeAudioPlayer() {
      * Начинает воспроизведение "актуального" плеера.
      */
     function playTopicalPlayer() {
-        // При запуске актуального плеера, всегда приостанавливаем основной плеер
-        pauseFullMainPlayer();
+        pauseAllAudio(); // При запуске актуального плеера, всегда приостанавливаем все остальные аудио
 
         // Пытаемся получить URL из data-audio атрибута элемента .topical-player
         const topicalAudioUrlFromData = topicalPlayerElement ? topicalPlayerElement.getAttribute('data-audio') : null;
@@ -241,9 +247,7 @@ export default function initializeAudioPlayer() {
 
         // Если это новый трек или currentTopicalAudio не установлен,
         // создаем новый объект Audio и запускаем его.
-        if (currentTopicalAudio) { // Если был какой-то другой актуальный трек, ставим его на паузу и сбрасываем
-            pauseTopicalPlayer();
-        }
+        // Если был какой-то другой актуальный трек, он уже был остановлен pauseAllAudio()
         currentTopicalAudio = new Audio(audioToPlayUrl);
 
 
