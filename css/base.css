@@ -1,0 +1,204 @@
+/* ============================================
+   BASE STYLES - FOUNDATION & RESET
+   ============================================ */
+
+@font-face {
+  font-family: "Neue Haas Unica";
+  src: url("../fonts/../fonts/NeueHaasUnica-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Neue Haas Unica";
+  src: url("../fonts/../fonts/NeueHaasUnica-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Neue Haas Unica";
+  src: url("../fonts/../fonts/NeueHaasUnica-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-primary);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-tight);
+  color: var(--color-primary);
+  background: var(--color-background);
+  overflow-x: hidden;
+}
+
+input {
+  outline: none;
+  border: none;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.flex-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+ul, p {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+a, input, button, li {
+  outline: none;
+  -webkit-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+input:focus {
+  border: none;
+  outline: none;
+}
+
+button {
+  border: none;
+}
+
+input {
+  font-size: 0.8rem;
+}
+
+.btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  gap: var(--spacing-sm);
+  background: var(--color-background-secondary);
+  -webkit-backdrop-filter: var(--backdrop-blur-sm);
+          backdrop-filter: var(--backdrop-blur-sm);
+  border-radius: var(--border-radius-md);
+  -webkit-transition: all var(--transition-normal) var(--ease-in-out);
+  -o-transition: all var(--transition-normal) var(--ease-in-out);
+  transition: all var(--transition-normal) var(--ease-in-out);
+  color: var(--color-primary);
+  font-family: var(--font-family-primary);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-base);
+  text-transform: uppercase;
+  line-height: var(--line-height-tight);
+}
+.btn:hover {
+  cursor: url("../img/cursor.svg");
+}
+
+.text-link {
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.title-track {
+  line-height: 100%;
+}
+@media (max-width: 768px) {
+  .title-track {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+  }
+}
+
+p.text {
+  margin-bottom: 20px;
+}
+
+.text {
+  font-weight: 300;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+}
+@media (max-width: 768px) {
+  .text {
+    font-size: 16px;
+  }
+}
+
+.text-2 {
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 140%;
+}
+@media (max-width: 768px) {
+  .text-2 {
+    font-size: 14px;
+  }
+}
+
+.text-3 {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 100%;
+}
+@media (max-width: 768px) {
+  .text-3 {
+    font-size: 12px;
+  }
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 256px;
+  line-height: 100%;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+.flex-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+

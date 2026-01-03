@@ -1,0 +1,218 @@
+/* ============================================
+   CUSTOM STYLES - PROJECT SPECIFIC OVERRIDES
+   ============================================ */
+
+/* Text Block Center Layout */
+.text-block-center {
+  max-width: calc(100% - 300px); /* 100% - (150px left + 150px right) */
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Album section styles */
+.album-img {
+  width: calc(100% - 300px);
+}
+
+/* ============================================
+   MINI PLAYER COMPONENT
+   ============================================ */
+
+/* Override hero-buttons-block to include mini player */
+.hero-buttons-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end; /* Changed from space-between to flex-end */
+  width: 100%;
+  gap: 20px; /* Add gap between mini player and buttons */
+}
+
+.mini-player {
+  position: relative; /* Changed from fixed to relative */
+  width: auto;
+  min-width: fit-content; /* Fit to content */
+  max-width: min-content; /* Constrain to minimum width needed */
+  background: radial-gradient(198.08% 198.08% at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 5px;
+  padding: 4px 5px; /* Same padding as hero-buttons-wrapper */
+  display: flex;
+  align-items: center;
+  height: 30px; /* Match height of navbar buttons */
+  font-family: "Neue Haas Unica", sans-serif;
+  color: #FCFCFC;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  white-space: nowrap; /* Prevent text wrapping */
+  user-select: none; /* Prevent text selection when dragging */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.mini-player.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mini-player * {
+  box-sizing: border-box;
+}
+
+.mini-player-content {
+  display: flex;
+  width: max-content; /* Use max-content to fit content exactly */
+  gap: 8px;
+  align-items: center;
+  height: 100%;
+  padding: 0 5px;
+}
+
+.mini-player-info {
+  position: relative;
+  cursor: pointer;
+  min-width: 0;
+  width: max-content; /* Use max-content to fit content exactly */
+  overflow: hidden; /* Clip the progress overlay */
+  border-radius: 4px;
+  padding: 2px 6px;
+  user-select: none; /* Prevent text selection when dragging */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.mini-player-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  position: relative;
+  z-index: 2; /* Above the progress */
+  user-select: none; /* Prevent text selection when dragging */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  padding: 0 6px;
+}
+
+.mini-player-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(251, 2, 2, 0.2); /* Semi-transparent red */
+  width: 0%;
+  transition: width 0.1s ease;
+  z-index: 1; /* Below the text */
+  border-radius: 4px 0 0 4px; /* Rounded left corners */
+  pointer-events: none; /* Ensure clicks pass through */
+}
+
+.mini-player-artist,
+.mini-player-track {
+  font-size: 14px;
+  font-weight: 400;
+  color: #FCFCFC;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: visible; /* Allow text to be fully visible */
+  width: max-content; /* Use max-content to fit content exactly */
+  user-select: none; /* Prevent text selection when dragging */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  display: inline-block;
+}
+
+/* Make sure the colored text has the same styles but with red color */
+.mini-player-text-colored .mini-player-artist,
+.mini-player-text-colored .mini-player-track,
+.mini-player-text-colored .mini-player-separator {
+  color: #fb0202;
+}
+
+.mini-player-separator {
+  color: #767676;
+  font-size: 12px;
+  flex-shrink: 0;
+  user-select: none; /* Prevent text selection when dragging */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.mini-player-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  width: max-content; /* Use max-content to fit content exactly */
+}
+
+.mini-player-progress {
+  height: 100%;
+  background: transparent; /* Transparent background */
+  width: 0%;
+  transition: width 0.1s ease;
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none; /* Ensure clicks pass through */
+}
+
+.mini-player-time {
+  font-size: 14px;
+  color: #767676;
+  font-weight: 300;
+  min-width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.mini-player-playpause {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #FCFCFC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+.mini-player-playpause:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mini-player-playpause svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Play/pause button states */
+.mini-player-playpause .play-icon {
+  display: block;
+}
+
+.mini-player-playpause .pause-icon {
+  display: none;
+}
+
+.mini-player-playpause.playing .play-icon {
+  display: none;
+}
+
+.mini-player-playpause.playing .pause-icon {
+  display: block;
+}
+
+/* Mobile responsive styles are now handled in responsive.css */

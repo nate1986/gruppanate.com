@@ -1,0 +1,242 @@
+/* ============================================
+   RESPONSIVE STYLES - ORGANIZED BY BREAKPOINT
+   ============================================ */
+
+/* ============================================
+   MOBILE FIRST APPROACH
+   Base styles are mobile-first, then enhanced for larger screens
+   ============================================ */
+
+/* ============================================
+   MOBILE STYLES (max-width: 768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Container adjustments */
+  .container {
+    padding: 0 var(--container-padding-mobile);
+  }
+  
+  /* Typography adjustments */
+  .text-block-center {
+    max-width: 100%;
+    padding: 0 var(--spacing-md);
+  }
+  
+  /* Button adjustments */
+  .btn {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+  
+  /* Hero section mobile */
+  .hero-buttons-block {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  
+  /* Mini player mobile */
+  .mini-player {
+    min-width: fit-content;
+    max-width: fit-content;
+  }
+  
+  .mini-player-artist,
+  .mini-player-track {
+    font-size: var(--font-size-xs);
+  }
+  
+  .mini-player-info {
+    padding: 2px 4px;
+  }
+  
+  /* Audio controls mobile */
+  .audio-controls {
+    gap: var(--spacing-sm);
+  }
+  
+  /* Visualizer mobile */
+  .visualizer-container {
+    height: 35px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+  
+  /* Album section mobile */
+  .album-img {
+    max-width: 100%;
+  }
+  
+  /* Footer mobile */
+  .footer {
+    padding: var(--spacing-lg) 0;
+  }
+}
+
+/* ============================================
+   TABLET STYLES (max-width: 1024px)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  /* Container adjustments */
+  .container {
+    padding: 0 var(--spacing-xl);
+  }
+  
+  /* Text block adjustments */
+  .text-block-center {
+    max-width: calc(100% - 230px);
+  }
+  
+  /* Album section tablet */
+  .album-img {
+    max-width: calc(100% - 230px);
+  }
+  
+  /* Hero section tablet */
+  .hero-title {
+    font-size: 200px;
+  }
+  
+  /* Footer tablet */
+  .footer-title {
+    font-size: 200px;
+  }
+}
+
+/* ============================================
+   DESKTOP STYLES (max-width: 1440px)
+   ============================================ */
+
+@media (max-width: 1440px) {
+  /* Container adjustments */
+  .container {
+    padding: 0 var(--spacing-xl);
+  }
+  
+  /* Text block adjustments */
+  .text-block-center {
+    max-width: calc(100% - 300px);
+  }
+  
+  /* Album section desktop */
+  .album-img {
+    max-width: calc(100% - 300px);
+  }
+  
+  /* Hero section desktop */
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  /* Footer desktop */
+  .footer-title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+/* ============================================
+   LARGE DESKTOP STYLES (max-width: 1650px)
+   ============================================ */
+
+@media (max-width: 1650px) {
+  /* Container adjustments */
+  .container {
+    max-width: 1600px;
+  }
+  
+  /* Hero section large desktop */
+  .hero-title {
+    font-size: 220px;
+  }
+  
+  /* Footer large desktop */
+  .footer-title {
+    font-size: 220px;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES FOR RESPONSIVE DESIGN
+   ============================================ */
+
+/* Hide on mobile */
+.hide-mobile {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* Show only on mobile */
+.show-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .show-mobile {
+    display: block;
+  }
+}
+
+/* Hide on tablet and below */
+.hide-tablet {
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .hide-tablet {
+    display: none;
+  }
+}
+
+/* Show only on tablet and below */
+.show-tablet {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .show-tablet {
+    display: block;
+  }
+}
+
+/* ============================================
+   RESPONSIVE SPACING UTILITIES
+   ============================================ */
+
+/* Responsive padding */
+.p-responsive {
+  padding: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .p-responsive {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Responsive margin */
+.m-responsive {
+  margin: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .m-responsive {
+    margin: var(--spacing-sm);
+  }
+}
+
+/* Responsive gap */
+.gap-responsive {
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .gap-responsive {
+    gap: var(--spacing-sm);
+  }
+}

@@ -1,0 +1,388 @@
+
+/* ============================================
+   ANIMATION STYLES - KEYFRAMES & TRANSITIONS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .slider {
+      margin-bottom: 0;
+    }
+  }
+  
+  .slick-slider {
+    margin: 0 -10px;
+  }
+  .slick-slider .element {
+    padding: 0 10px;
+  }
+  
+  .slick-slide:not(.slick-active) {
+    opacity: 0.5;
+  }
+  
+  .slider-info {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 30px;
+    margin: 40px 0 50px auto;
+    max-width: 522px;
+  }
+  @media (max-width: 768px) {
+    .slider-info {
+      margin: 40px 0 50px 30px;
+    }
+  }
+  .slider-info p.text.text-24 {
+    margin-bottom: 0;
+  }
+  .slider-info .start-year {
+    position: relative;
+    font-weight: 300;
+    font-size: 160px;
+    line-height: 100%;
+  }
+  @media (max-width: 768px) {
+    .slider-info .start-year {
+      font-size: 100px;
+      line-height: 100%;
+    }
+  }
+  @media (max-width: 768px) {
+    .slider-info .start-year svg {
+      width: 218px;
+      height: auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .slider-info p.text {
+      margin-bottom: 0;
+    }
+  }
+  
+  .playlist .img-overlay:after {
+    background-image: url(../img/overlay3.png);
+    opacity: 0.3;
+  }
+  .playlist-blocks {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 150px;
+    border-top: 1px solid #2D2D2D;
+    border-bottom: 1px solid #2D2D2D;
+    padding-top: 130px;
+    padding-bottom: 80px;
+  }
+  @media (max-width: 768px) {
+    .playlist-blocks {
+      padding-bottom: 40px;
+    }
+  }
+  .playlist-block {
+    display: flex;
+    gap: 80px;
+    /* Kills the default vertical stretching */
+    align-items: flex-start; 
+  }
+  @media (max-width: 1440px) {
+    .playlist-block {
+      gap: 60px;
+    }
+  }
+  @media (max-width: 1120px) {
+    .playlist-block {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+    }
+  }
+  .playlist-block.reverse {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+  }
+  @media (max-width: 1120px) {
+    .playlist-block.reverse {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+    }
+  }
+  .playlist-block.reverse .playlist-list-bottom {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+  @media (max-width: 1120px) {
+    .playlist-block.reverse .playlist-list-bottom {
+      -webkit-box-pack: end;
+          -ms-flex-pack: end;
+              justify-content: flex-end;
+    }
+  }
+  .playlist-items {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 20px;
+  }
+  .playlist-items .text-track {
+    display: none;
+  }
+  .playlist-list-title.text {
+    max-width: 587px;
+    margin-bottom: 80px;
+  }
+  @media (max-width: 1440px) {
+    .playlist-list-title.text {
+      margin-bottom: 60px;
+    }
+  }
+  .playlist-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;  
+    width: 100%;
+  }
+  /* Добавляем нижний отступ ко всем элементам, КРОМЕ последнего */
+  .playlist-list > * {
+    margin-bottom: 60px; /* Задайте желаемый интервал (например, 15px) */
+  }
+  .playlist-list > *:first-child {
+    margin-top: 60px;
+  }
+  /* Убеждаемся, что у последнего элемента нет нижнего отступа, чтобы он не добавлял лишнее пространство внизу */
+  .playlist-list > *:last-child {
+    margin-bottom: 0;
+  }
+  .playlist-list-bottom {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 15px;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+  }
+  @media (max-width: 1440px) {
+    .playlist-list-bottom {
+      margin-top: 50px;
+    }
+  }
+  
+  .custom-img--block {
+    
+    min-width: 890px;
+    max-width: 890px;
+    border-radius: 15px;
+  }
+  @media (max-width: 1650px) {
+    .custom-img--block {
+      min-width: 820px;
+      max-width: 820px;
+    }
+  }
+  @media (max-width: 1440px) {
+    .custom-img--block {
+      min-width: 670px;
+      max-width: 670px;
+      height: 830px;
+    }
+  }
+  @media (max-width: 1120px) {
+    .custom-img--block {
+      min-width: auto;
+      max-width: none;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+  }
+  .custom-img--block .img {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  .custom-img--block img {
+    border-radius: 15px;
+    mix-blend-mode: lighten;
+    opacity: 0.8;
+  }
+  .custom-img--block .text-top {
+    position: absolute;
+    top: -90px;
+    left: 0;
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    .custom-img--block .text-top {
+      top: -80px;
+    }
+  }
+  .custom-img--block .text-top p {
+    font-weight: 500;
+    font-size: 164.716px;
+    line-height: 100%;
+  }
+  .custom-img--block .text-bottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+  }
+  .custom-img--block .text-bottom .text-2 {
+    padding-right: 20px;
+    margin-bottom: -20px;
+  }
+  
+  .footer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding-top: 90px;
+    padding-bottom: 60px;
+    text-align: center;
+  }
+  @media (max-width: 768px) {
+    .footer {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+  }
+  .footer h2 {
+    font-weight: 500;
+    font-size: 256px;
+    line-height: 100%;
+  }
+  .footer-buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    gap: 15px;
+    margin: 50px 0;
+  }
+  @media (max-width: 1440px) {
+    .footer-buttons {
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+    }
+  }
+  @media (max-width: 768px) {
+    .footer-buttons {
+      margin: 40px 0 50px 0;
+    }
+  }
+  .footer-buttons svg {
+    height: 24px;
+  }
+  .footer .text-2 {
+    margin-bottom: 5px;
+  }
+  .footer .logo {
+    margin-top: 50px;
+  }
+  .footer .logo p {
+    font-weight: 300;
+    font-size: 10px;
+    line-height: 120%;
+  }
+  @media (max-width: 1440px) {
+    .footer-title svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  @supports (-webkit-appearance:none){
+  .img-overlay:after{background-image:url("../img/overlay.webp")}
+  .img-overlay:before{background-image:url("../img/overlay2.webp")}
+  .voice-assistant-item.play .play-button:after{background-image:url("../img/pause.svg")}
+  .voice-assistant-item.pause .play-button:after{background-image:url("../img/play.svg")}
+  .play-button.playing:after,.play-btn--main.playing:after{background-image:url("../img/pause.svg")}
+  .play-button:after,.play-btn--main:after{background-image:url("../img/play.svg")}
+  .playlist .img-overlay:after{background-image:url(../img/overlay3.webp)}
+  }
+  
+   @media (max-width: 768px){
+  
+  @supports (-webkit-appearance:none){
+  
+  }
+  
+  }
+  
+   @media (max-width: 1440px){
+  
+  @supports (-webkit-appearance:none){
+  
+  }
+  
+  }
+  
+   @media (max-width: 1024px){
+  
+  @supports (-webkit-appearance:none){
+  
+  }
+  
+  }
+  
+   @media (max-width: 850px){
+  
+  @supports (-webkit-appearance:none){
+  
+  }
+  
+  }
+  
+   @media (max-width: 1120px){
+  
+  @supports (-webkit-appearance:none){
+  
+  }
+  
+  }
+  
+   @media (max-width: 1650px){
+  
+  @supports (-webkit-appearance:none){
+  
+  }
+  
+  }

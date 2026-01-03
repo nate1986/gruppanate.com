@@ -1,0 +1,185 @@
+/* ============================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   ============================================ */
+
+:root {
+  /* ============================================
+     COLOR PALETTE
+     ============================================ */
+  
+  /* Primary Colors */
+  --color-primary: #FCFCFC;
+  --color-secondary: #767676;
+  --color-accent: #E5876C;
+  --color-background: #171717;
+  --color-background-secondary: #2D2D2D;
+  
+  /* Status Colors */
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-error: #FB0004;
+  --color-info: #2196F3;
+  
+  /* Overlay Colors */
+  --color-overlay-light: rgba(255, 255, 255, 0.2);
+  --color-overlay-dark: rgba(0, 0, 0, 0.5);
+  --color-progress: rgba(251, 2, 2, 0.2);
+  
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+  
+  /* Font Family */
+  --font-family-primary: "Neue Haas Unica", sans-serif;
+  --font-family-fallback: sans-serif;
+  
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* Font Sizes */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 256px;
+  
+  /* Line Heights */
+  --line-height-tight: 100%;
+  --line-height-normal: 120%;
+  --line-height-relaxed: 140%;
+  
+  /* Letter Spacing */
+  --letter-spacing-tight: 0.01em;
+  --letter-spacing-normal: 0;
+  
+  /* ============================================
+     SPACING SYSTEM
+     ============================================ */
+  
+  /* Base Spacing Unit */
+  --spacing-unit: 5px;
+  
+  /* Spacing Scale */
+  --spacing-xs: calc(var(--spacing-unit) * 1);   /* 5px */
+  --spacing-sm: calc(var(--spacing-unit) * 2);   /* 10px */
+  --spacing-md: calc(var(--spacing-unit) * 4);   /* 20px */
+  --spacing-lg: calc(var(--spacing-unit) * 6);   /* 30px */
+  --spacing-xl: calc(var(--spacing-unit) * 8);   /* 40px */
+  --spacing-2xl: calc(var(--spacing-unit) * 12); /* 60px */
+  --spacing-3xl: calc(var(--spacing-unit) * 18);  /* 90px */
+  
+  /* ============================================
+     LAYOUT & SIZING
+     ============================================ */
+  
+  /* Container */
+  --container-max-width: 1920px;
+  --container-padding: var(--spacing-2xl);
+  --container-padding-mobile: var(--spacing-md);
+  
+  /* Border Radius */
+  --border-radius-sm: 3px;
+  --border-radius-md: 5px;
+  --border-radius-lg: 8px;
+  --border-radius-xl: 10px;
+  --border-radius-2xl: 15px;
+  --border-radius-full: 50%;
+  
+  /* ============================================
+     BREAKPOINTS
+     ============================================ */
+  
+  /* Breakpoint Values */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1440px;
+  --breakpoint-large: 1650px;
+  
+  /* Media Query Mixins (for reference) */
+  --mq-mobile: (max-width: 768px);
+  --mq-tablet: (max-width: 1024px);
+  --mq-desktop: (max-width: 1440px);
+  --mq-large: (max-width: 1650px);
+  
+  /* ============================================
+     ANIMATIONS & TRANSITIONS
+     ============================================ */
+  
+  /* Transition Durations */
+  --transition-fast: 0.1s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+  
+  /* Transition Easing */
+  --ease-in: ease-in;
+  --ease-out: ease-out;
+  --ease-in-out: ease-in-out;
+  
+  /* Animation Durations */
+  --animation-fast: 0.2s;
+  --animation-normal: 0.3s;
+  --animation-slow: 0.5s;
+  --animation-slower: 2s;
+  
+  /* ============================================
+     Z-INDEX SCALE
+     ============================================ */
+  
+  --z-index-dropdown: 6;
+  --z-index-sticky: 10;
+  --z-index-fixed: 2;
+  --z-index-modal: 1000;
+  --z-index-popover: 1010;
+  --z-index-tooltip: 1020;
+  --z-index-cursor: 999;
+  
+  /* ============================================
+     SHADOWS & EFFECTS
+     ============================================ */
+  
+  /* Backdrop Filter */
+  --backdrop-blur-sm: blur(5px);
+  --backdrop-blur-md: blur(10px);
+  --backdrop-blur-lg: blur(15px);
+  
+  /* Gradients */
+  --gradient-radial: radial-gradient(198.08% 198.08% at 50% 50%, var(--color-overlay-light) 0%, rgba(255, 255, 255, 0) 100%);
+  
+  /* ============================================
+     COMPONENT SPECIFIC VARIABLES
+     ============================================ */
+  
+  /* Mini Player */
+  --mini-player-height: 30px;
+  --mini-player-padding: var(--spacing-xs) var(--spacing-unit);
+  --mini-player-gap: var(--spacing-sm);
+  
+  /* Audio Controls */
+  --audio-bar-height: 1px;
+  --audio-bar-current-height: 200%;
+  --audio-bar-radius: 500px;
+  
+  /* Visualizer */
+  --visualizer-height: 45px;
+  --visualizer-padding: var(--spacing-unit) var(--spacing-sm);
+  --visualizer-radius: 40px;
+  --bar-width: 0.5px;
+  --bar-height: 5.8px;
+  
+  /* Hero Section */
+  --hero-padding-top: 110px;
+  --hero-margin-top: 150px;
+  --hero-title-offset: -150px;
+  --hero-year-size: 174px;
+  
+  /* Footer */
+  --footer-padding-top: var(--spacing-3xl);
+  --footer-padding-bottom: var(--spacing-2xl);
+  --footer-title-size: var(--font-size-3xl);
+}
