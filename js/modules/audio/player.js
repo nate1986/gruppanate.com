@@ -117,6 +117,25 @@ export default function () {
                 if (currentPlayedAudio === audio) {
                     currentPlayedAudio = null;
                 }
+                
+                // Auto-play next track from the same album
+                const albumId = element.dataset.albumId;
+                if (albumId) {
+                    // Find all tracks from the same album
+                    const albumTracks = Array.from(document.querySelectorAll(`.voice-assistant-item[data-album-id="${albumId}"]`));
+                    const currentIndex = albumTracks.indexOf(element);
+                    
+                    // If there's a next track in the album, play it
+                    if (currentIndex >= 0 && currentIndex < albumTracks.length - 1) {
+                        const nextElement = albumTracks[currentIndex + 1];
+                        const nextAudioUrl = nextElement.getAttribute('data-audio');
+                        
+                        // Small delay to ensure current track cleanup completes
+                        setTimeout(() => {
+                            handleAudioListItemBtnClick(nextAudioUrl, nextElement);
+                        }, 300);
+                    }
+                }
             });
             
             const newData = {audio, element}

@@ -1,4 +1,4 @@
-import { debug } from './debug.js';
+import { debug, debugError } from './debug.js';
 
 /**
  * Get the current language from URL parameter
@@ -84,7 +84,20 @@ export function initLanguageSelector() {
  * This function should be called after translations are loaded or language is switched.
  */
 export function updateTranslatedContent() {
-  // initLanguageSelector(); // Removed to prevent duplicate event listeners
+  // Update HTML lang attribute
+  const currentLang = getCurrentLanguage();
+  document.documentElement.lang = currentLang;
+  
+  // Update language button text
+  const langButton = document.querySelector('.lang-button');
+  if (langButton) {
+    const langText = langButton.querySelector('span');
+    if (langText) {
+      langText.textContent = currentLang === 'ru' ? 'EN' : 'RU';
+      debug('ui', `Language button updated to: ${langText.textContent}`);
+    }
+  }
+  
   // Re-trigger content population to apply translations without reloading the page
   if (typeof window.refreshContent === 'function') {
     window.refreshContent();

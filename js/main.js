@@ -10,13 +10,20 @@ import { initLanguageSelector } from './modules/utils/language.js';
 import { safeGtagEvent, safeGtagReportConversionContent, safeGtagReportConversionExt } from './modules/utils/analytics.js';
 import { refreshContent } from './modules/utils/refreshContent.js';
 import { populateHead, populateHeroLogo, populateTextBlocks, populateSlider, initSlider, populateFooter, populateNavButtons, populateAlbum } from './modules/content/contentPopulator.js';
+import { populateFAQ } from './modules/content/faqPopulator.js';
 import { initBurgerMenu, initScrollTo } from './modules/ui/navigation.js';
 import { initTabFunctionality } from './modules/ui/tabFunctionality.js';
+import { initStructuredData } from './modules/utils/structuredDataLoader.js';
+import { initAnalytics } from './modules/utils/analyticsLoader.js';
+import { initAISearchOptimization } from './modules/utils/aiSearchOptimizer.js';
 
 // Make analytics functions globally available for inline event handlers
 window.safeGtagEvent = safeGtagEvent;
 window.safeGtagReportConversionContent = safeGtagReportConversionContent;
 window.safeGtagReportConversionExt = safeGtagReportConversionExt;
+
+// Initialize analytics early (for Google Analytics, Search Console, Yandex)
+initAnalytics();
 
 // Initialization logs
 debug('init', 'main.js loaded');
@@ -25,6 +32,12 @@ debug('data', 'neboysyaAlbum loaded', neboysyaAlbum);
 debug('data', 'etologiaAlbum loaded', etologiaAlbum);
 debug('data', 'adu1Album loaded', adu1Album);
 debug('data', 'adu2Album loaded', adu2Album);
+
+// Initialize structured data (loads early for SEO)
+initStructuredData();
+
+// Initialize AI search optimization
+initAISearchOptimization();
 
 // Initialize language selector
 initLanguageSelector();
@@ -58,6 +71,9 @@ populateFooter(generalInfo);
 // Populate navigation buttons
 populateNavButtons(content);
 
+// Populate FAQ section
+populateFAQ();
+
 // Populate album sections
 debug('init', 'Starting album population...');
 
@@ -89,4 +105,19 @@ try {
   debug('init', 'Player initialized');
 } catch (e) {
   debugError('init', 'Error initializing player:', e);
+}
+
+// Register Service Worker for caching
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('[Service Worker] Registered successfully:', registration.scope);
+        debug('init', 'Service Worker registered');
+      })
+      .catch((error) => {
+        console.error('[Service Worker] Registration failed:', error);
+        debugError('init', 'Service Worker registration failed:', error);
+      });
+  });
 }

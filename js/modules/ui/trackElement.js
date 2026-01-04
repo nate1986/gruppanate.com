@@ -6,12 +6,16 @@ import { safeGtagEvent, safeGtagReportConversionContent } from '../utils/analyti
  * Creates a track element for the playlist
  * @param {Object} track - The track data
  * @param {string} lang - The current language
+ * @param {string} albumId - The album ID this track belongs to
  * @returns {HTMLElement} - The track element
  */
-export function createTrackElement(track, lang = getCurrentLanguage()) {
+export function createTrackElement(track, lang = getCurrentLanguage(), albumId = null) {
   const article = document.createElement('article');
   article.className = 'voice-assistant-item w-clearfix';
   article.dataset.audio = track.audio;
+  if (albumId) {
+    article.dataset.albumId = albumId;
+  }
 
   const title = translate(track.title);
   const name = translate(track.name);

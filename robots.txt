@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /js/
+Disallow: /fonts/
+Disallow: /css/
+Disallow: /mus/
+
+Sitemap: https://gruppanate.com/sitemap.xml
+

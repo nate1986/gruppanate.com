@@ -352,17 +352,29 @@ export const playItemListPlayer = (audio, element) => {
 
         // Mouse move handler - handle dragging
         const mouseMoveHandler = (e) => {
-            if (draggingStates.get(timelineContainer)) {
-                debug('audio', '[ListItemPlayer][timeline:mousemove]', {
-                    trackTitle,
-                    clientX: e.clientX,
-                    currentTime: audioMap.get(element)?.currentTime,
-                    eventTarget: e.target,
-                    targetClass: e.target?.className,
-                    listenerAttachedTo: timelineHitArea.className,
-                });
-                handleSeek(e, timelineContainer, element);
-                e.preventDefault();
+            const isDragging = draggingStates.get(timelineContainer);
+            if (isDragging) {
+                // Only prevent default if we're actually dragging on this timeline
+                // Check if mouse is over the timeline element to avoid blocking scroll elsewhere
+                const rect = timelineContainer.getBoundingClientRect();
+                const isOverTimeline = e.clientX >= rect.left && e.clientX <= rect.right &&
+                                      e.clientY >= rect.top && e.clientY <= rect.bottom;
+                
+                if (isOverTimeline) {
+                    debug('audio', '[ListItemPlayer][timeline:mousemove]', {
+                        trackTitle,
+                        clientX: e.clientX,
+                        currentTime: audioMap.get(element)?.currentTime,
+                        eventTarget: e.target,
+                        targetClass: e.target?.className,
+                        listenerAttachedTo: timelineHitArea.className,
+                    });
+                    handleSeek(e, timelineContainer, element);
+                    e.preventDefault();
+                } else {
+                    // Mouse left the timeline area, stop dragging
+                    draggingStates.set(timelineContainer, false);
+                }
             }
         };
 
@@ -454,6 +466,12 @@ export const pauseItemPlayer = (element) => {
     if (intervals.has(element)) {
         clearInterval(intervals.get(element));
         intervals.delete(element);
+    }
+    
+    // Reset dragging state for this element's timeline
+    const timelineContainer = element.querySelector('.audio-controls-bar');
+    if (timelineContainer && draggingStates.has(timelineContainer)) {
+        draggingStates.set(timelineContainer, false);
     }
 }
 

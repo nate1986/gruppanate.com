@@ -2,6 +2,19 @@
    CUSTOM STYLES - PROJECT SPECIFIC OVERRIDES
    ============================================ */
 
+/* Screen reader only - для SEO заголовков, скрытых визуально */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+
 /* Text Block Center Layout */
 .text-block-center {
   max-width: calc(100% - 300px); /* 100% - (150px left + 150px right) */
@@ -12,6 +25,12 @@
 /* Album section styles */
 .album-img {
   width: calc(100% - 300px);
+}
+
+/* Center album image between text blocks */
+.playlist-blocks > .custom-img--block {
+  margin: 0 auto;
+  display: block;
 }
 
 /* ============================================

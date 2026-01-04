@@ -7,6 +7,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!-- Performance: DNS prefetch and preconnect for external resources -->
+	<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+	<link rel="dns-prefetch" href="https://mc.yandex.ru">
+	<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+	<link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
 	<title id="site-title">Святослав Задерий и Группа НАТЕ! - Музыка для взрослых</title>
 	<meta name="description" id="meta-description" content="Святослав Задерий и Группа НАТЕ! - Музыка для взрослых - Официальный сайт">
 	<meta name="keywords" id="meta-keywords" content="Святослав Задерий, Группа НАТЕ!, рок-группа, музыка, ленинградский рок, русский рок">
@@ -23,17 +29,195 @@
 	<meta property="twitter:description" id="twitter-description" content="Святослав Задерий и Группа НАТЕ! - Музыка для взрослых - Официальный сайт">
 	<meta property="twitter:image" id="twitter-image" content="https://gruppanate.com/img/og.webp">
 	<link rel="canonical" id="canonical" href="https://gruppanate.com/">
+	<!-- hreflang tags for bilingual support -->
+	<link rel="alternate" hreflang="ru" href="https://gruppanate.com/" />
+	<link rel="alternate" hreflang="en" href="https://gruppanate.com/" />
+	<link rel="alternate" hreflang="x-default" href="https://gruppanate.com/" />
 	<link rel="icon" type="image/x-icon" id="favicon" href="img/favicon.ico">
 	<!-- Preload critical resources -->
 	<link rel="preload" as="image" href="img/hero.webp" type="image/webp">
-	<link rel="stylesheet" type="text/css" href="css/slick.css" />
-	<link rel="stylesheet" href="css/variables.css">
+	<link rel="preload" as="font" href="fonts/NeueHaasUnica-Regular.woff2" type="font/woff2" crossorigin>
+	<link rel="preload" as="font" href="fonts/NeueHaasUnica-Medium.woff2" type="font/woff2" crossorigin>
+	
+	<!-- Critical CSS - Inline for faster First Contentful Paint -->
+	<style>
+		/* Critical CSS - Above the fold styles */
+		:root {
+			--color-primary: #FCFCFC;
+			--color-secondary: #767676;
+			--color-accent: #E5876C;
+			--color-background: #171717;
+			--color-background-secondary: #2D2D2D;
+			--color-overlay-light: rgba(255, 255, 255, 0.2);
+			--font-family-primary: "Neue Haas Unica", sans-serif;
+			--font-weight-normal: 400;
+			--font-size-xl: 20px;
+			--line-height-tight: 100%;
+			--spacing-unit: 5px;
+			--spacing-xs: calc(var(--spacing-unit) * 1);
+			--spacing-sm: calc(var(--spacing-unit) * 2);
+			--spacing-md: calc(var(--spacing-unit) * 4);
+			--spacing-2xl: calc(var(--spacing-unit) * 12);
+			--border-radius-md: 5px;
+			--backdrop-blur-sm: blur(5px);
+			--z-index-fixed: 2;
+			--hero-margin-top: 150px;
+		}
+		* {
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		body {
+			margin: 0;
+			font-family: var(--font-family-primary);
+			font-weight: var(--font-weight-normal);
+			font-size: var(--font-size-xl);
+			line-height: var(--line-height-tight);
+			color: var(--color-primary);
+			background: var(--color-background);
+			overflow-x: hidden;
+		}
+		.hero {
+			padding: 10px 0 0 0;
+		}
+		.hero-img {
+			margin-top: 150px;
+		}
+		.hero-img.hero-block {
+			margin-bottom: 90px;
+		}
+		.hero-title {
+			position: absolute;
+			top: -150px;
+			left: 0;
+			width: 100%;
+		}
+		.hero-year {
+			position: absolute;
+			right: 0;
+			bottom: -10px;
+		}
+		.year {
+			font-weight: 300;
+			font-size: 174px;
+			line-height: 100%;
+			color: transparent;
+			-webkit-text-stroke: 1px #FCFCFC;
+		}
+		.hero-buttons-block {
+			position: fixed;
+			bottom: 60px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			z-index: 2;
+			padding: 0 60px;
+			right: 0;
+		}
+		.hero-buttons {
+			position: relative;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			padding: 5px 15px;
+			gap: 20px;
+			z-index: 2;
+		}
+		.hero-buttons-wrapper {
+			display: flex;
+			align-items: center;
+			padding: 4px 5px;
+			background: radial-gradient(198.08% 198.08% at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px);
+			border-radius: 5px;
+		}
+		.btn {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding: var(--spacing-xs) var(--spacing-sm);
+			gap: var(--spacing-sm);
+			background: var(--color-background-secondary);
+			-webkit-backdrop-filter: var(--backdrop-blur-sm);
+			backdrop-filter: var(--backdrop-blur-sm);
+			border-radius: var(--border-radius-md);
+			color: var(--color-primary);
+			font-family: var(--font-family-primary);
+			font-weight: var(--font-weight-normal);
+			font-size: 14px;
+			text-transform: uppercase;
+			line-height: var(--line-height-tight);
+		}
+		.sr-only {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border-width: 0;
+		}
+		.container {
+			max-width: 1920px;
+			padding: var(--spacing-2xl);
+		}
+		@media (max-width: 1024px) {
+			.hero-img {
+				margin-top: 60px;
+			}
+			.hero-img.hero-block {
+				height: 700px;
+			}
+			.hero-title {
+				top: -50px;
+			}
+			.hero-buttons-block {
+				padding: 0 40px;
+			}
+		}
+		@media (max-width: 768px) {
+			.hero-img.hero-block {
+				height: 400px;
+				margin-bottom: 50px;
+			}
+			.hero-year {
+				bottom: 0px;
+			}
+			.year {
+				font-size: 100px;
+			}
+			.hero-buttons-block {
+				padding: 0 20px;
+				left: 0;
+				justify-content: flex-start;
+			}
+			.hero-buttons-wrapper.mob-none {
+				display: none;
+			}
+		}
+	</style>
+	
+	<!-- Non-critical CSS - Load after critical -->
+	<link rel="stylesheet" type="text/css" href="css/variables.css">
 	<link rel="stylesheet" href="css/base.css">
-	<link rel="stylesheet" href="css/components.css">
 	<link rel="stylesheet" href="css/layout.css">
+	<link rel="stylesheet" type="text/css" href="css/slick.css">
+	<link rel="stylesheet" href="css/components.css">
 	<link rel="stylesheet" href="css/animations.css">
 	<link rel="stylesheet" href="css/responsive.css">
 	<link rel="stylesheet" href="css/custom.css">
+	
+	<!-- Structured Data (JSON-LD) - Loaded from separate file via JavaScript -->
+	<!-- Data is stored in js/modules/data/structuredData.js and injected by structuredDataLoader.js -->
+	<!-- The script will be injected here automatically when the page loads -->
+	
+	<!-- Analytics and Verification Tags -->
+	<!-- Google Analytics, Search Console verification, Yandex Metrika are loaded via analyticsLoader.js -->
+	<!-- Configuration is in js/modules/data/seoConfig.js - managers can update IDs there -->
 
 	</head>
 
@@ -44,6 +228,24 @@
 				return true; // Prevent default error handling
 			};
 		</script>
+		
+		<!-- Breadcrumb Navigation -->
+		<nav aria-label="Breadcrumb" style="display: none;">
+			<ol itemscope itemtype="https://schema.org/BreadcrumbList">
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<a itemprop="item" href="https://gruppanate.com/">
+						<span itemprop="name">Главная</span>
+					</a>
+					<meta itemprop="position" content="1" />
+				</li>
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<a itemprop="item" href="https://gruppanate.com/about.html">
+						<span itemprop="name">О проекте</span>
+					</a>
+					<meta itemprop="position" content="2" />
+				</li>
+			</ol>
+		</nav>
 		
 		<header class="hero-buttons-block">
 			<!-- Mini player moved inside hero-buttons-block -->
@@ -112,13 +314,16 @@
 
 		<main>
 
-			<section class="hero">
+		<section class="hero">
 
-				<div class="container">
+			<div class="container">
+			
+			<!-- Main H1 heading for SEO -->
+			<h1 class="sr-only">Святослав Задерий и Группа НАТЕ! - Музыка для взрослых</h1>
 
-				<div class="hero-img relative hero-block">
+			<div class="hero-img relative hero-block">
 					<div class="img-overlay">
-						<img src="img/hero.webp" alt="Святослав Задерий и Группа НАТЕ!" fetchpriority="high">
+						<img src="img/hero.webp" alt="Святослав Задерий и Группа НАТЕ! - основатель группы Алиса, ленинградский рок-музыкант" fetchpriority="high">
 					</div>
 						<div class="hero-title" id="hero-logo">
 							<!-- Logo will be populated here by JavaScript -->
@@ -126,8 +331,18 @@
 						<p class="hero-year year">1987</p>
 					</div>
 
-				<article class="text-block text-block-left" id="text-block-left" aria-label="Band history"></article>
-				<article class="text-block text-block-right" id="text-block-right" aria-label="Motivation"></article>
+				<article class="text-block text-block-left" id="text-block-left" aria-label="Band history">
+					<noscript>
+						<p class="text">Советский рок – неотъемлемая часть мировой культуры. В нём были выкрикнуты надежды и чаяния нескольких поколений жителей советского и постсоветского пространства, их мировоззрение, боль и мечты. Среди тех, кто создавал музыку и слова, отразившие эпоху конца Союза, есть немало имён незаслуженно забытых, затерянных во времени, но не потерявших своей значимости.</p>
+						<p class="text">Группа НАТЕ! была основана в 1987 году в Ленинграде Святославом Задерием, который также основал группу Алиса. Название группы предложил Константин Кинчев. Группа стала одной из легенд ленинградского рока и выпустила несколько знаковых альбомов, включая "Не бойся" (1987) и "Этология" (1989).</p>
+					</noscript>
+				</article>
+				<article class="text-block text-block-right" id="text-block-right" aria-label="Motivation">
+					<noscript>
+						<p class="text"><a href="https://ru.wikipedia.org/wiki/Задерий,_Святослав_Геннадьевич" target="_blank" style="color: #FCFCFC;">Святослав Задерий</a> стоял у истоков русского рока. Он основал группы <a href="https://ru.wikipedia.org/wiki/Алиса_(группа)" target="_blank" style="color: #FCFCFC;">"АЛИСА"</a> и <a href="https://ru.wikipedia.org/wiki/Нате!_(группа)" target="_blank" style="color: #FCFCFC;">"НАТЕ!"</a>. Его песни гремели по всему Союзу в конце 80-х и начале 90-х годов, а его неуёмная энергия вдохновляла соратников и поклонников на собственные свершения.</p>
+						<p class="text">В 2023 году был выпущен концептуальный альбом <a href="about.html" style="color: #FCFCFC;">"Музыка для взрослых"</a>, записанный с участием более 50 музыкантов из различных известных рок-групп, включая участников Алисы, Аквариума, Кино, ДДТ и других. Альбом стал памятником Святославу Задерию и его вкладу в русский рок.</p>
+					</noscript>
+				</article>
 
 			</div>
 
@@ -135,11 +350,15 @@
 
 		<section class="album">
 			<div class="container">
+				<h2 class="sr-only">Альбомы Группы НАТЕ!</h2>
 				<div class="playlist-blocks">
 					<article class="text-block text-block-center" id="text-block-albumintro" aria-label="About the album"></article>
-					<div class="container album-img">
-							<div class="img-overlay">
-								<img src="img/album.webp" alt="Святослав Задерий и Группа НАТЕ!" fetchpriority="high">
+					<div class="custom-img--block relative" style="margin: 0 auto; max-width: 890px;">
+							<div class="img img-overlay">
+								<picture>
+									<source srcset="img/album.webp" type="image/webp">
+									<img src="img/album.webp" alt="Альбом Музыка для взрослых - Святослав Задерий и Группа НАТЕ!" fetchpriority="high">
+								</picture>
 							</div>
 					</div>
 					<article class="text-block text-block-center" id="text-block-albuminfo" aria-label="About the album extended"></article>
@@ -148,7 +367,7 @@
 							<div class="img img-overlay">
 							<picture>
 								<source srcset="img/SideAprescale.webp" type="image/webp">
-								<img src="img/SideAprescale.png" alt="Группа НАТЕ!" loading="lazy">
+								<img src="img/SideAprescale.png" alt="Альбом Музыка для взрослых - Сторона А: О человеке и государстве, Группа НАТЕ!" loading="lazy">
 							</picture>
 							</div>
 						</div>
@@ -167,7 +386,7 @@
 							<div class="img img-overlay">
 							<picture>
 								<source srcset="img/SideBprescale.webp" type="image/webp">
-								<img src="img/SideBprescale.png" alt="Группа НАТЕ!" loading="lazy">
+								<img src="img/SideBprescale.png" alt="Альбом Музыка для взрослых - Сторона Б: О любви, Группа НАТЕ!" loading="lazy">
 							</picture>
 							</div>
 						</div>
@@ -191,6 +410,7 @@
 		<aside class="slider" aria-label="Historical timeline">
 
 			<div class="container">
+				<h2 class="sr-only">История Группы НАТЕ!</h2>
 
 				<div class="slick-slider" id="slider-content">
 
@@ -203,6 +423,7 @@
 			<section class="playlist">
 
 				<div class="container">
+					<h2 class="sr-only">Архивные альбомы Группы НАТЕ!</h2>
 
 					<div class="playlist-blocks">
 
@@ -212,7 +433,7 @@
 								<div class="img img-overlay">
 								<picture>
 									<source srcset="img/img1.webp" type="image/webp">
-									<img src="img/img1.png" alt="Группа НАТЕ!" loading="lazy">
+									<img src="img/img1.png" alt="Альбом Не бойся - Группа НАТЕ! 1987" loading="lazy">
 								</picture>
 								</div>
 								<div class="text-top" id="neboysya-sloganSvg"></div>
@@ -239,7 +460,7 @@
 								<div class="img img-overlay">
 								<picture>
 									<source srcset="img/about2.webp" type="image/webp">
-									<img src="img/about2.png" alt="Группа НАТЕ!" loading="lazy">
+									<img src="img/about2.png" alt="Альбом Этология - Группа НАТЕ! 1989" loading="lazy">
 								</picture>
 								</div>
 								<div class="text-top" id="etologia-sloganSvg"></div>
@@ -265,6 +486,17 @@
 				</div>
 			</section>
 
+		<!-- FAQ Section for AI Search Optimization -->
+		<!-- FAQ content is loaded from js/modules/data/faqData.js and populated by faqPopulator.js -->
+		<section class="faq-section" style="display: none;" aria-label="Часто задаваемые вопросы">
+			<div class="container">
+				<h2 class="sr-only">Часто задаваемые вопросы о Группе НАТЕ!</h2>
+				<div itemscope itemtype="https://schema.org/FAQPage">
+					<!-- FAQ items will be populated here by JavaScript -->
+				</div>
+			</div>
+		</section>
+
 		</main>
 
 		<footer class="footer">
@@ -288,8 +520,10 @@
 
 		</footer>
 
-		<script src="js/jquery.min.js"></script>
-		<script type="text/javascript" src="js/slick.min.js"></script>
+		<!-- JavaScript: Load with defer for better performance -->
+		<!-- Note: ES6 modules are deferred by default, but explicit defer doesn't hurt -->
+		<script src="js/jquery.min.js" defer></script>
+		<script type="text/javascript" src="js/slick.min.js" defer></script>
 		<script type="module" src="js/main.js"></script>
 
 	</body>

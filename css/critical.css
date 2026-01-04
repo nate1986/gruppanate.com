@@ -1,0 +1,188 @@
+/* Critical CSS - Above the fold styles
+ * This CSS is inlined in HTML for faster First Contentful Paint
+ * Only includes styles needed for initial render
+ */
+
+/* CSS Variables - Essential for all styles */
+:root {
+  --color-primary: #FCFCFC;
+  --color-secondary: #767676;
+  --color-accent: #E5876C;
+  --color-background: #171717;
+  --color-background-secondary: #2D2D2D;
+  --color-overlay-light: rgba(255, 255, 255, 0.2);
+  --font-family-primary: "Neue Haas Unica", sans-serif;
+  --font-weight-normal: 400;
+  --font-size-xl: 20px;
+  --line-height-tight: 100%;
+  --spacing-unit: 5px;
+  --spacing-xs: calc(var(--spacing-unit) * 1);
+  --spacing-sm: calc(var(--spacing-unit) * 2);
+  --spacing-md: calc(var(--spacing-unit) * 4);
+  --spacing-2xl: calc(var(--spacing-unit) * 12);
+  --border-radius-md: 5px;
+  --backdrop-blur-sm: blur(5px);
+  --z-index-fixed: 2;
+  --hero-margin-top: 150px;
+}
+
+/* Base Reset */
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-tight);
+  color: var(--color-primary);
+  background: var(--color-background);
+  overflow-x: hidden;
+}
+
+/* Hero Section - Critical for above fold */
+.hero {
+  padding: 10px 0 0 0;
+}
+
+.hero-img {
+  margin-top: 150px;
+}
+
+.hero-img.hero-block {
+  margin-bottom: 90px;
+}
+
+.hero-title {
+  position: absolute;
+  top: -150px;
+  left: 0;
+  width: 100%;
+}
+
+.hero-year {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+}
+
+.year {
+  font-weight: 300;
+  font-size: 174px;
+  line-height: 100%;
+  color: transparent;
+  -webkit-text-stroke: 1px #FCFCFC;
+  text-stroke: 1px #FCFCFC;
+}
+
+/* Hero Buttons - Fixed position */
+.hero-buttons-block {
+  position: fixed;
+  bottom: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 2;
+  padding: 0 60px;
+  right: 0;
+}
+
+.hero-buttons {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 15px;
+  gap: 20px;
+  z-index: 2;
+}
+
+.hero-buttons-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 4px 5px;
+  background: radial-gradient(198.08% 198.08% at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 5px;
+}
+
+.btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  gap: var(--spacing-sm);
+  background: var(--color-background-secondary);
+  -webkit-backdrop-filter: var(--backdrop-blur-sm);
+  backdrop-filter: var(--backdrop-blur-sm);
+  border-radius: var(--border-radius-md);
+  color: var(--color-primary);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-normal);
+  font-size: 14px;
+  text-transform: uppercase;
+  line-height: var(--line-height-tight);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Container */
+.container {
+  max-width: 1920px;
+  padding: var(--spacing-2xl);
+}
+
+/* Responsive adjustments for critical content */
+@media (max-width: 1024px) {
+  .hero-img {
+    margin-top: 60px;
+  }
+  .hero-img.hero-block {
+    height: 700px;
+  }
+  .hero-title {
+    top: -50px;
+  }
+  .hero-buttons-block {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-img.hero-block {
+    height: 400px;
+    margin-bottom: 50px;
+  }
+  .hero-year {
+    bottom: 0px;
+  }
+  .year {
+    font-size: 100px;
+  }
+  .hero-buttons-block {
+    padding: 0 20px;
+    left: 0;
+    justify-content: flex-start;
+  }
+  .hero-buttons-wrapper.mob-none {
+    display: none;
+  }
+}
+
+

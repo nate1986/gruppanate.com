@@ -78,67 +78,10 @@ export function populateHead(generalInfo) {
     }
   });
 
-  // Add Google Tag script
-  try {
-    const gtagScript = document.createElement('script');
-    gtagScript.async = true;
-    gtagScript.src = generalInfo.head.googleTag.src;
-    document.head.appendChild(gtagScript);
-    debug('init', 'GTAG script added');
-  } catch (e) {
-    debugError('init', 'Error adding GTAG script:', e);
-  }
-
-  // Add Google Tag config
-  try {
-    const gtagConfigScript = document.createElement('script');
-    gtagConfigScript.innerHTML = translate(generalInfo.head.googleTag.config);
-    document.head.appendChild(gtagConfigScript);
-    debug('init', 'GTAG config added');
-  } catch (e) {
-    debugError('init', 'Error adding GTAG config:', e);
-  }
-
-  // Add Google Tag conversion content
-  try {
-    const conversionContentScript = document.createElement('script');
-    conversionContentScript.innerHTML = translate(generalInfo.head.googleTag.conversionContent);
-    document.head.appendChild(conversionContentScript);
-    debug('init', 'GTAG conversion content added');
-  } catch (e) {
-    debugError('init', 'Error adding GTAG conversion content:', e);
-  }
-
-  // Add Google Tag conversion ext
-  try {
-    const conversionExtScript = document.createElement('script');
-    conversionExtScript.innerHTML = translate(generalInfo.head.googleTag.conversionExt);
-    document.head.appendChild(conversionExtScript);
-    debug('init', 'GTAG conversion ext added');
-  } catch (e) {
-    debugError('init', 'Error adding GTAG conversion ext:', e);
-  }
-
-  // Add Yandex Metrika
-  try {
-    const yandexScript = document.createElement('script');
-    yandexScript.type = 'text/javascript';
-    yandexScript.innerHTML = translate(generalInfo.head.yandexMetrika);
-    document.head.appendChild(yandexScript);
-    debug('init', 'Yandex Metrika added');
-  } catch (e) {
-    debugError('init', 'Error adding Yandex Metrika:', e);
-  }
-
-  // Add Yandex noscript
-  try {
-    const noscript = document.createElement('noscript');
-    noscript.innerHTML = translate(generalInfo.head.yandexNoscript);
-    document.head.appendChild(noscript);
-    debug('init', 'Yandex noscript added');
-  } catch (e) {
-    debugError('init', 'Error adding Yandex noscript:', e);
-  }
+  // Note: Analytics (Google Analytics, Yandex Metrika) are now loaded via analyticsLoader.js
+  // This is initialized in main.js before contentPopulator runs
+  // Configuration is in js/modules/data/seoConfig.js
+  debug('init', 'Analytics are loaded separately via analyticsLoader.js');
 }
 
 /**
@@ -478,7 +421,7 @@ export async function populateAlbum(albumId, albumData) {
         debug('init', `Found ${albumId}-items, populating tracks...`);
         const lang = getCurrentLanguage();
         albumData.tracks.forEach((track, index) => {
-          const trackElement = createTrackElement(track, lang);
+          const trackElement = createTrackElement(track, lang, albumId);
           playlistItems.appendChild(trackElement);
           debug('init', `Track ${index + 1} added to playlist`);
         });
@@ -513,5 +456,130 @@ export async function populateAlbum(albumId, albumData) {
     } catch (e) {
       debugError('init', `Error populating ${albumId} links:`, e);
     }
+  }
+}
+
+/**
+ * Populates about page content
+ * @param {Object} aboutData - About page data
+ */
+export function populateAbout(aboutData) {
+  // Populate press release content
+  try {
+    const pressReleaseContainer = document.getElementById('press-release-content');
+    if (pressReleaseContainer) {
+      pressReleaseContainer.innerHTML = '';
+      
+      // Intro paragraphs
+      aboutData.pressRelease.intro.forEach(paragraph => {
+        const p = document.createElement('p');
+        p.className = 'text';
+        p.innerHTML = translate(paragraph);
+        pressReleaseContainer.appendChild(p);
+      });
+      
+      // Side A
+      const sideATitle = document.createElement('p');
+      sideATitle.className = 'text';
+      sideATitle.innerHTML = translate(aboutData.pressRelease.sideA.title);
+      pressReleaseContainer.appendChild(sideATitle);
+      
+      aboutData.pressRelease.sideA.tracks.forEach(track => {
+        // Only add the text, title is already included in the text
+        const trackText = document.createElement('p');
+        trackText.className = 'text';
+        trackText.innerHTML = translate(track.text);
+        pressReleaseContainer.appendChild(trackText);
+      });
+      
+      // Side B
+      const sideBTitle = document.createElement('p');
+      sideBTitle.className = 'text';
+      sideBTitle.innerHTML = translate(aboutData.pressRelease.sideB.title);
+      pressReleaseContainer.appendChild(sideBTitle);
+      
+      aboutData.pressRelease.sideB.tracks.forEach(track => {
+        // Only add the text, title is already included in the text
+        const trackText = document.createElement('p');
+        trackText.className = 'text';
+        trackText.innerHTML = translate(track.text);
+        pressReleaseContainer.appendChild(trackText);
+      });
+      
+      debug('init', 'Press release content populated');
+    }
+  } catch (e) {
+    debugError('init', 'Error populating press release content:', e);
+  }
+  
+  // Populate team section
+  try {
+    const teamContainer = document.getElementById('team-content');
+    if (teamContainer) {
+      teamContainer.innerHTML = '';
+      
+      // Project team
+      const projectTeamTitle = document.createElement('p');
+      projectTeamTitle.className = 'text';
+      projectTeamTitle.textContent = translate(aboutData.team.projectTeam.title);
+      teamContainer.appendChild(projectTeamTitle);
+      
+      const projectTeamList = document.createElement('p');
+      projectTeamList.className = 'text';
+      const teamMembers = aboutData.team.projectTeam.members.map(member => 
+        `<b>${member.name}</b> - ${translate(member.role)}`
+      ).join('<br>');
+      projectTeamList.innerHTML = teamMembers;
+      teamContainer.appendChild(projectTeamList);
+      
+      // Musicians
+      const musicianSections = [
+        aboutData.team.musicians.drummers,
+        aboutData.team.musicians.bassists,
+        aboutData.team.musicians.guitarists,
+        aboutData.team.musicians.keyboardists,
+        aboutData.team.musicians.saxophone,
+        aboutData.team.musicians.mandolin,
+        aboutData.team.musicians.percussion,
+        aboutData.team.musicians.session,
+        aboutData.team.musicians.vocalists
+      ];
+      
+      musicianSections.forEach(section => {
+        const sectionTitle = document.createElement('p');
+        sectionTitle.className = 'text';
+        sectionTitle.textContent = translate(section.title);
+        teamContainer.appendChild(sectionTitle);
+        
+        const sectionList = document.createElement('p');
+        sectionList.className = 'text';
+        const members = section.members.map(member => {
+          if (member.bands) {
+            return `<b>${member.name}</b> - ${member.bands}`;
+          } else if (member.instrument) {
+            return `<b>${member.name}</b> - ${translate(member.instrument)}`;
+          } else {
+            return `<b>${member.name}</b>`;
+          }
+        }).join('<br>');
+        sectionList.innerHTML = members;
+        teamContainer.appendChild(sectionList);
+      });
+      
+      debug('init', 'Team content populated');
+    }
+  } catch (e) {
+    debugError('init', 'Error populating team content:', e);
+  }
+  
+  // Populate navigation button
+  try {
+    const homeButton = document.getElementById('home-button');
+    if (homeButton) {
+      homeButton.textContent = translate(aboutData.navigation.homeButton);
+      debug('init', 'Home button populated');
+    }
+  } catch (e) {
+    debugError('init', 'Error populating home button:', e);
   }
 }

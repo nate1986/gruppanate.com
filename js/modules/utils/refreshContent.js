@@ -194,23 +194,54 @@ export async function refreshContent(generalInfo, neboysyaAlbum, etologiaAlbum, 
         });
         debug('init', 'Slider content updated without reinitialization');
         
-        // Just refresh the existing slider
+        // Just refresh the existing slider - use refresh method instead of setOption
         setTimeout(() => {
           try {
-            if (typeof $(".slick-slider").slick === 'function') {
-              $(".slick-slider").slick('setOption', {
-                slidesToShow: 1.2,
-                infinite: false,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 1600,
-                dots: false,
-                arrows: false,
-              }, true);
-              debug('init', 'Slick slider refreshed with new content');
+            const $slider = $(".slick-slider");
+            if ($slider.length > 0 && $slider.hasClass('slick-initialized')) {
+              // Check if slider is properly initialized
+              const sliderElement = $slider[0];
+              if (sliderElement && sliderElement.slick) {
+                // Use refresh method which is safer
+                $slider.slick('refresh');
+                debug('init', 'Slick slider refreshed with new content');
+              } else {
+                debugWarn('init', 'Slider element exists but slick instance not found, skipping refresh');
+              }
+            } else {
+              debugWarn('init', 'Slider not initialized or not found, skipping refresh');
             }
           } catch (refreshError) {
             debugError('init', 'Error refreshing slick slider:', refreshError);
+            // If refresh fails, try to reinitialize
+            try {
+              const $slider = $(".slick-slider");
+              if ($slider.length > 0) {
+                if ($slider.hasClass('slick-initialized')) {
+                  $slider.slick('unslick');
+                }
+                $slider.slick({
+                  slidesToShow: 1.2,
+                  infinite: false,
+                  slidesToScroll: 1,
+                  autoplay: true,
+                  autoplaySpeed: 1600,
+                  dots: false,
+                  arrows: false,
+                  responsive: [
+                    {
+                      breakpoint: 768,
+                      settings: {
+                        slidesToShow: 1.1,
+                      }
+                    },
+                  ]
+                });
+                debug('init', 'Slick slider reinitialized after refresh error');
+              }
+            } catch (reinitError) {
+              debugError('init', 'Error reinitializing slick slider:', reinitError);
+            }
           }
         }, 100);
       } else {

@@ -176,7 +176,18 @@ export default function() {
     function handleMouseMove(e) {
         if (!isDragging || !currentAudio) return;
         
-        handleSeek(e);
+        // Only prevent default if we're actually dragging over the progress container
+        const rect = miniPlayerProgressContainer.getBoundingClientRect();
+        const isOverProgress = e.clientX >= rect.left && e.clientX <= rect.right &&
+                              e.clientY >= rect.top && e.clientY <= rect.bottom;
+        
+        if (isOverProgress) {
+            handleSeek(e);
+            e.preventDefault();
+        } else {
+            // Mouse left the progress area, stop dragging
+            isDragging = false;
+        }
     }
     
     // Handle mouse up to end seeking
@@ -209,6 +220,11 @@ export default function() {
     // Update mini player when audio state changes
     function updateAudioState(audio, trackInfo, isPlaying) {
         debug('miniPlayer', 'Updating audio state', { trackInfo, isPlaying });
+        
+        // Reset dragging state when switching tracks
+        if (currentAudio !== audio) {
+            isDragging = false;
+        }
         
         if (isPlaying) {
             showMiniPlayer(audio, trackInfo);
